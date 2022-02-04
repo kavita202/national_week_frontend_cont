@@ -8,7 +8,12 @@ export default function Topic({ title, imgPath, query }) {
       <h3 className="week-names">{title}</h3>
       <div
         id={title}
-        onClick={() => router.push(`/questions/${query}`)}
+        onClick={() =>
+          router.push({
+            pathname: "/questions/[topic]",
+            query: { topic: query },
+          })
+        }
         className="topic"
       >
         <Image
