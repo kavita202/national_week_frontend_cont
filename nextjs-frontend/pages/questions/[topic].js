@@ -1,5 +1,4 @@
 import { nanoid } from "nanoid";
-import { useRouter } from "next/router";
 import { table, minifyRecords } from "../api/utils/index.js";
 import { useState, useEffect } from "react";
 function shuffleArray(array) {
@@ -104,13 +103,6 @@ function Topic({ data }) {
     return <></>;
   }
 }
-// return (
-//   <div>
-//     {data.map(({ fields }) => {
-//       return <p>{fields.Question}</p>;
-//     })}
-//   </div>
-// );
 
 export async function getServerSideProps(context) {
   const { topic } = context.query;
@@ -122,7 +114,7 @@ export async function getServerSideProps(context) {
     })
     .firstPage();
   data = minifyRecords(data);
-  // console.log(data[0]);
+  
   if (!data) {
     return {
       notFound: true,
