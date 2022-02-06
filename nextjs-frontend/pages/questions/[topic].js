@@ -1,6 +1,7 @@
+import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import { table, minifyRecords } from "../api/utils/index.js";
-import { useState, useEffect } from "react";
+import MCQ from "../../components/mcq";
+import { Radio, Form } from "antd";
 function shuffleArray(array) {
   let i = array.length;
   while (i--) {
@@ -10,11 +11,8 @@ function shuffleArray(array) {
   return array;
 }
 
-function Topic({ data }) {
-  console.log(data);
+function QuestionPage({ data, topic }) {
   const [result, setResult] = useState(-1);
-  const [shuffledAns, setShuffledAns] = useState([]);
-  const [colorChange, setColorChange] = useState("");
   const [userChoices, setUserChoices] = useState([
     null,
     null,
@@ -23,17 +21,8 @@ function Topic({ data }) {
     null,
     null,
   ]);
-  useEffect(() => {
-    if (data) {
-      let answerArray = data.map((set) => [
-        { answer: set.fields.correct, correct: true },
-        ...set.fields.incorrect.map(function (ans) {
-          return { answer: ans, correct: false };
-        }),
-      ]);
-      setShuffledAns(answerArray.map((set) => shuffleArray(set)));
-    }
-  }, [data]);
+  const [shuffledAns, setShuffledAns] = useState([]);
+  const [colorChange, setColorChange] = useState("");
 
   function handleClick(e) {
     e.preventDefault();
@@ -46,6 +35,20 @@ function Topic({ data }) {
     }
     setResult(count);
   }
+
+  useEffect(() => {
+    if (data) {
+      let answerArray = data.map(({ correct_answer, incorrect_answers }) => [
+        { answer: correct_answer, correct: true },
+        ...incorrect_answers.map(function (ans) {
+          return { answer: ans, correct: false };
+        }),
+      ]);
+      setShuffledAns(answerArray.map((set) => shuffleArray(set)));
+    }
+    console.log(data);
+  }, [data]);
+
   function handleUserChoice(e, i) {
     setUserChoices([
       ...userChoices.slice(0, i),
@@ -57,33 +60,28 @@ function Topic({ data }) {
   if (shuffledAns.length > 1 && data) {
     return (
       <div className="question_Section">
-        <h2>
-          {data[0].fields.Topic[0].toUpperCase() +
-            data[0].fields.Topic.slice(1)}{" "}
-        </h2>
+        <h2>{topic[0].toUpperCase() + topic.slice(1)} </h2>
         <form onSubmit={handleClick}>
-          {data.map(({ fields }, i) => (
-            <div className="QuestionBox" key={data.id}>
-              <h4>{fields.Question}</h4>
-              {shuffledAns[i].map((obj) => (
-                <label
-                  key={nanoid()}
-                  style={{
-                    color: obj.correct ? colorChange : "",
-                  }}
-                >
-                  <input
-                    type="radio"
-                    value={obj.correct}
-                    name={fields.Question}
-                    checked={userChoices[i] === obj.answer}
-                    onChange={() => handleUserChoice(obj.answer, i)}
-                    required
-                  />
-                  {obj.answer}
-                  <br></br>
-                </label>
-              ))}
+          {data.map(({ question, id, type }, i) => (
+            <div className="QuestionBox" key={id}>
+              <h4>{question}</h4>
+              <Form.Item name={i} rules={[{ required: true }]}>
+                <Radio.Group>
+                  {type === "MCQ" ? (
+                    shuffledAns[i].map((obj) => (
+                      <MCQ
+                        colorChange={colorChange}
+                        obj={obj}
+                        name={i}
+                        checked={userChoices[i] === obj.answer}
+                        onChange={() => handleUserChoice(obj.answer, i)}
+                      />
+                    ))
+                  ) : (
+                    <></>
+                  )}
+                </Radio.Group>
+              </Form.Item>
             </div>
           ))}
           <div className="feedback">
@@ -106,23 +104,10 @@ function Topic({ data }) {
 
 export async function getServerSideProps(context) {
   const { topic } = context.query;
-  let data = await table
-    .select({
-      maxRecords: 6,
-      view: "Grid view",
-      filterByFormula: `{Topic} = '${topic}'`,
-    })
-    .firstPage();
-  data = minifyRecords(data);
-  
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
-  return {
-    props: { data }, // will be passed to the page component as props
-  };
+  const res = await fetch(`http://localhost:5000/questions?topic=${topic}`);
+  let data = await res.json();
+  data = data.payload;
+  return { props: { data, topic } };
 }
 
-export default Topic;
+export default QuestionPage;
