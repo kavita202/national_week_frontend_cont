@@ -10,7 +10,7 @@ export default function Topic({ title, imgPath, query }) {
         id={title}
         onClick={() =>
           router.push({
-            pathname: "/questions/[topic]",
+            pathname: "/topics/[topic]",
             query: { topic: query },
           })
         }

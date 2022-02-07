@@ -1,7 +1,9 @@
 import Head from "next/head";
+import Header from "../../components/header.js";
+import Layout from "../../components/layout.js";
+import TopicPage from "../../components/topicpage";
+import "antd/dist/antd.css";
 
-import Layout from "../components/layout";
-import TopicPage from "../components/topicpage";
 export default function Home() {
   return (
     <div className="container">
