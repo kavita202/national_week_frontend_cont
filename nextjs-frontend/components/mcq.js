@@ -1,24 +1,23 @@
 import { nanoid } from "nanoid";
-import { Radio, Space } from "antd";
-function MCQ({ obj, name, colorChange, checked, onChange }) {
+import { Form, Radio, Space } from "antd";
+function MCQ({ i, shuffledAns }) {
+  console.log(shuffledAns);
   return (
-    <label
-      key={nanoid()}
-      style={{
-        color: obj.correct ? colorChange : "",
-      }}
+    <Form.Item
+      name={i}
+      value={i}
+      rules={[{ required: true, message: "Please select an answer!" }]}
     >
-      <input
-        type="radio"
-        value={obj.correct}
-        checked={checked}
-        onChange={onChange}
-        name={name}
-        required
-      />
-      {obj.answer}
-      <br></br>
-    </label>
+      <Radio.Group>
+        <Space direction="vertical">
+          {shuffledAns.map((obj) => (
+            <Radio value={obj.answer} key={obj.answer}>
+              {obj.answer}
+            </Radio>
+          ))}
+        </Space>
+      </Radio.Group>
+    </Form.Item>
   );
 }
 
