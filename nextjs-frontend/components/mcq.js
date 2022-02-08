@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { Form, Radio, Space } from "antd";
-function MCQ({ i, shuffledAns }) {
+function MCQ({ i, shuffledAns, colorChange }) {
   console.log(shuffledAns);
   return (
     <Form.Item
@@ -11,7 +11,11 @@ function MCQ({ i, shuffledAns }) {
       <Radio.Group>
         <Space direction="vertical">
           {shuffledAns.map((obj) => (
-            <Radio value={obj.answer} key={obj.answer}>
+            <Radio
+              value={obj.answer}
+              key={obj.answer}
+              style={{ color: obj.correct ? colorChange : "" }}
+            >
               {obj.answer}
             </Radio>
           ))}
