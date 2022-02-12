@@ -4,7 +4,6 @@ import Topic from "./topic";
 export default function TopicPage() {
   return (
     <div>
-      <h2>Click on a topic!</h2>
       <div className="topic-section">
         <Topic
           title=" Week 2 - Javascript"
@@ -42,17 +41,17 @@ export default function TopicPage() {
           imgPath="https://pluginicons.craft-cdn.com/react.svg?1527521614"
         ></Topic>
         <Topic
-         query="agile"
+          query="agile"
           title="Week 9 - Agile"
           imgPath="https://cdn.vectorstock.com/i/thumb-large/69/21/agile-icon-methodology-development-scrum-vector-30766921.jpg"
         ></Topic>
         <Topic
-         query="computer_science"
+          query="computer_science"
           title="Week 10 - Computer Science"
           imgPath="https://www.kindpng.com/picc/m/78-786173_computer-science-logo-png-transparent-png.png"
         ></Topic>
         <Topic
-        query="architecture"
+          query="architecture"
           title="Week 11 - Architecture"
           imgPath="https://images.ukdissertations.com/119/0520653188015.001.png"
         ></Topic>
@@ -66,6 +65,7 @@ export default function TopicPage() {
           margin: 0 auto;
           justify-content: center;
           gap: 50px;
+          padding-top: 30px;
         }
       `}</style>
     </div>

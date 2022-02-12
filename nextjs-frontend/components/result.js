@@ -3,7 +3,7 @@ import { Modal, Button } from "antd";
 function Result(result, showCorrect, reattempt, visible) {
   return (
     <Modal
-      title="Result"
+      title="Performance"
       visible={visible}
       onOk={showCorrect}
       onCancel={reattempt}

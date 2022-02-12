@@ -1,12 +1,12 @@
 import { nanoid } from "nanoid";
 import { Form, Radio, Space } from "antd";
-function MCQ({ i, shuffledAns, colorChange }) {
-  console.log(shuffledAns);
+function MCQ({ i, shuffledAns, answer }) {
+  console.log(answer);
   return (
     <Form.Item
       name={i}
       value={i}
-      rules={[{ required: true, message: "Please select an answer!" }]}
+      rules={[{ required: true, message: "Please select an answer" }]}
     >
       <Radio.Group>
         <Space direction="vertical">
@@ -14,7 +14,10 @@ function MCQ({ i, shuffledAns, colorChange }) {
             <Radio
               value={obj.answer}
               key={obj.answer}
-              style={{ color: obj.correct ? colorChange : "" }}
+              style={{
+                fontWeight: obj.correct && answer ? "600" : "",
+                color: obj.correct && answer ? "green" : "",
+              }}
             >
               {obj.answer}
             </Radio>

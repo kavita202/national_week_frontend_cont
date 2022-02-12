@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
+
 export default function Topic({ title, imgPath, query }) {
   const router = useRouter();
 
@@ -35,6 +36,9 @@ export default function Topic({ title, imgPath, query }) {
             font-size: 20px;
             cursor: pointer;
             box-shadow: 0 4px 8px 0 #caf0f8;
+          }
+          .week-names {
+            text-align: center;
           }
         `}
       </style>

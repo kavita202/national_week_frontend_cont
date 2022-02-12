@@ -11,6 +11,7 @@ export default {
       "encrypted-tbn0.gstatic.com",
       "nodejs.org",
       "www.logolynx.com",
+      "miro.medium.com",
     ],
   },
   env: {
