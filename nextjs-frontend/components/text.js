@@ -1,6 +1,6 @@
 import { Form, Input } from "antd";
 
-function Text() {
+function Written() {
   return (
     <Form.Item
       name={i}
@@ -12,4 +12,4 @@ function Text() {
   );
 }
 
-export default Text;
+export default Written;

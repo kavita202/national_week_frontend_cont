@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import MCQ from "../../components/mcq";
 import TopicHeader from "../../components/topicHeader.js";
-import Text from "../../components/text";
+import Written from "../../components/text";
 // import Result from "../../components/result";
-import { Button, Radio, Form, Modal, Result } from "antd";
+import { Button, Typography, Space, Form, Modal, Result } from "antd";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 // import ReactCanvasConfetti from
 import "antd/dist/antd.css";
+import { useUser } from "@auth0/nextjs-auth0";
 
 function shuffleArray(array) {
   let i = array.length;
@@ -17,14 +18,15 @@ function shuffleArray(array) {
   }
   return array;
 }
-
+const { Text } = Typography;
 function QuestionPage({ data, topic }) {
   const [result, setResult] = useState(-1);
   const [shuffledAns, setShuffledAns] = useState([]);
   const [answer, setAnswer] = useState(false);
   const [userChoices, setUserChoices] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [addResult, setAddResult] = useState("");
+  const { user } = useUser();
   function onFinish(values) {
     setUserChoices(values);
     compare();
@@ -68,6 +70,31 @@ function QuestionPage({ data, topic }) {
     setAnswer(false);
     setIsModalVisible(false);
   };
+
+  const sendResult = useCallback(() => {
+    if (!user) {
+      setAddResult("Please sign in to track your progress");
+    } else if (user) {
+      const userId = user.sub;
+      try {
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userId,
+            topic: topic,
+            score: result,
+          }),
+        });
+        console.log(result);
+        setAddResult("Result saved");
+      } catch (error) {
+        setAddResult("Please try again");
+      }
+    }
+  }, [user, result]);
 
   if (shuffledAns.length > 1 && data) {
     return (
@@ -116,9 +143,19 @@ function QuestionPage({ data, topic }) {
               title={`You scored: ${result}`}
               subTitle={result > 5 ? "Well done!" : ""}
               extra={[
-                <Button type="primary" key="log">
+                <Button type="primary" key="log" onClick={sendResult}>
                   Record result
                 </Button>,
+                <Space
+                  direction="horizontal"
+                  style={{
+                    width: "100%",
+                    justifyContent: "center",
+                    paddingTop: "5px",
+                  }}
+                >
+                  <Text>{addResult}</Text>
+                </Space>,
               ]}
             />
           </Modal>
