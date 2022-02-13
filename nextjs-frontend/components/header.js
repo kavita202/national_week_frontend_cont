@@ -7,8 +7,6 @@ import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 const { SubMenu } = Menu;
 export default function Header() {
   const { user } = useUser();
-  console.log(user);
-  console.log(user);
   return (
     <Menu mode="horizontal">
       <Menu.Item key="Home">
