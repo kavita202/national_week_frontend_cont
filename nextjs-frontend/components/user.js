@@ -1,6 +1,6 @@
 import { useUser } from "@auth0/nextjs-auth0";
 
-export default function User() {
+export default function UserId() {
   const { user } = useUser();
-  return user ? <></> : <></>;
+  return user ? <>{user.sub}</> : <></>;
 }

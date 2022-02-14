@@ -78,7 +78,7 @@ function QuestionPage({ data, topic }) {
       const userId = user.sub;
       try {
         fetch("http://localhost:5000/users", {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
