@@ -6,10 +6,10 @@ const Home = () => {
   return (
     <div>
       <Header />
-      <Info
+      {/* <Info
         description="the forgetting curve"
         text="Challenging the forgetting curve"
-      />
+      /> */}
     </div>
   );
 };

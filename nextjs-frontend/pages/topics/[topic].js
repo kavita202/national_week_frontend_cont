@@ -2,11 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import MCQ from "../../components/mcq";
 import TopicHeader from "../../components/topicHeader.js";
+import Header from "../../components/header";
 import Written from "../../components/text";
-// import Result from "../../components/result";
-import { Button, Typography, Space, Form, Modal, Result } from "antd";
-import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
-// import ReactCanvasConfetti from
+import Popup from "../../components/popup.js";
+import { Modal, Button, Typography, Form } from "antd";
 import "antd/dist/antd.css";
 import { useUser } from "@auth0/nextjs-auth0";
 
@@ -23,18 +22,13 @@ function QuestionPage({ data, topic }) {
   const [result, setResult] = useState(-1);
   const [shuffledAns, setShuffledAns] = useState([]);
   const [answer, setAnswer] = useState(false);
-  const [userChoices, setUserChoices] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [addResult, setAddResult] = useState("");
   const { user } = useUser();
-  function onFinish(values) {
-    setUserChoices(values);
-    compare();
-  }
 
-  function compare() {
+  function compare(values) {
     let count = 0;
-    for (const [key, value] of Object.entries(userChoices)) {
+    for (const [key, value] of Object.entries(values)) {
       if (value === data[key].correct_answer) {
         count++;
       }
@@ -56,14 +50,12 @@ function QuestionPage({ data, topic }) {
     console.log(data);
   }, [data]);
 
-  const showModal = () => {
+  function showModal() {
     setIsModalVisible(true);
-  };
-
+  }
   const showCorrect = () => {
     setAnswer(true);
     setIsModalVisible(false);
-    console.log(isModalVisible);
   };
 
   const reattempt = () => {
@@ -77,7 +69,7 @@ function QuestionPage({ data, topic }) {
     } else if (user) {
       const userId = user.sub;
       try {
-        fetch("http://localhost:5000/users", {
+        fetch("http://localhost:5000/progress", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -99,9 +91,10 @@ function QuestionPage({ data, topic }) {
   if (shuffledAns.length > 1 && data) {
     return (
       <>
+        <Header />
         <TopicHeader topic={topic[0].toUpperCase() + topic.slice(1)} />
         <div className="question_Section">
-          <Form onFinish={onFinish}>
+          <Form onFinish={compare}>
             {data.map(({ question, id, type }, i) => (
               <div className="QuestionBox" key={id}>
                 <h4>{question}</h4>
@@ -130,35 +123,18 @@ function QuestionPage({ data, topic }) {
               background-color: white;
             }
           `}</style>
-          <Modal
-            title="Result"
-            onCancel={showCorrect}
-            onOk={reattempt}
-            visible={isModalVisible}
-            cancelText="Show correct answers"
-            okText="Reattempt"
-          >
-            <Result
-              icon={result > 4 ? <SmileOutlined /> : <FrownOutlined />}
-              title={`You scored: ${result}`}
-              subTitle={result > 5 ? "Well done!" : ""}
-              extra={[
-                <Button type="primary" key="log" onClick={sendResult}>
-                  Record result
-                </Button>,
-                <Space
-                  direction="horizontal"
-                  style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    paddingTop: "5px",
-                  }}
-                >
-                  <Text>{addResult}</Text>
-                </Space>,
-              ]}
+          {isModalVisible ? (
+            <Popup
+              addResult={addResult}
+              sendResult={sendResult}
+              result={result}
+              isModalVisible={isModalVisible}
+              showCorrect={showCorrect}
+              reattempt={reattempt}
             />
-          </Modal>
+          ) : (
+            <></>
+          )}
         </div>
       </>
     );
