@@ -7,9 +7,6 @@ import { UserOutlined, SettingOutlined } from "@ant-design/icons";
 const { SubMenu } = Menu;
 export default function Header() {
   const { user } = useUser();
-  if (user) {
-    console.log(user.sub);
-  }
   return (
     <Menu mode="horizontal">
       <Menu.Item key="Home">
@@ -52,7 +49,7 @@ export default function Header() {
           <Menu.ItemGroup>
             <Menu.Item key="user">{user.nickname}</Menu.Item>
             <Menu.Item key="progress">
-              <Link href={`/progress/${user.sub}`}>
+              <Link href={`/progress`}>
                 <a>Progress</a>
               </Link>
             </Menu.Item>

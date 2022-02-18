@@ -5,8 +5,9 @@ import TopicHeader from "../../components/topicHeader.js";
 import Header from "../../components/header";
 import Written from "../../components/text";
 import Popup from "../../components/popup.js";
-import { Modal, Button, Typography, Form } from "antd";
+import { Button, Typography, Form, Modal, Space, Result } from "antd";
 import "antd/dist/antd.css";
+import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import { useUser } from "@auth0/nextjs-auth0";
 
 function shuffleArray(array) {
@@ -123,18 +124,35 @@ function QuestionPage({ data, topic }) {
               background-color: white;
             }
           `}</style>
-          {isModalVisible ? (
-            <Popup
-              addResult={addResult}
-              sendResult={sendResult}
-              result={result}
-              isModalVisible={isModalVisible}
-              showCorrect={showCorrect}
-              reattempt={reattempt}
+          <Modal
+            title="Result"
+            onCancel={showCorrect}
+            onOk={reattempt}
+            visible={isModalVisible}
+            cancelText="Show correct answers"
+            okText="Reattempt"
+          >
+            <Result
+              icon={result > 4 ? <SmileOutlined /> : <FrownOutlined />}
+              title={`You scored: ${result}`}
+              subTitle={result > 5 ? "Well done!" : ""}
+              extra={[
+                <Button type="primary" key="log" onClick={sendResult}>
+                  Record result
+                </Button>,
+                <Space
+                  direction="horizontal"
+                  style={{
+                    width: "100%",
+                    justifyContent: "center",
+                    paddingTop: "5px",
+                  }}
+                >
+                  <Text>{addResult}</Text>
+                </Space>,
+              ]}
             />
-          ) : (
-            <></>
-          )}
+          </Modal>
         </div>
       </>
     );

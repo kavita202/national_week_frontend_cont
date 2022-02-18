@@ -11,35 +11,41 @@ function Popup({
   addResult,
 }) {
   return (
-    <Modal
-      title="Result"
-      onCancel={showCorrect}
-      onOk={reattempt}
-      visible={isModalVisible}
-      cancelText="Show correct answers"
-      okText="Reattempt"
-    >
-      <Result
-        icon={result > 4 ? <SmileOutlined /> : <FrownOutlined />}
-        title={`You scored: ${result}`}
-        subTitle={result > 5 ? "Well done!" : ""}
-        extra={[
-          <Button type="primary" key="log" onClick={sendResult}>
-            Record result
-          </Button>,
-          <Space
-            direction="horizontal"
-            style={{
-              width: "100%",
-              justifyContent: "center",
-              paddingTop: "5px",
-            }}
-          >
-            <Text>{addResult}</Text>
-          </Space>,
-        ]}
-      />
-    </Modal>
+    <>
+      {isModalVisible ? (
+        <Modal
+          title="Result"
+          onCancel={() => showCorrect}
+          onOk={() => reattempt}
+          visible={() => isModalVisible}
+          cancelText="Show correct answers"
+          okText="Reattempt"
+        >
+          <Result
+            icon={result > 4 ? <SmileOutlined /> : <FrownOutlined />}
+            title={`You scored: ${result}`}
+            subTitle={result > 5 ? "Well done!" : ""}
+            extra={[
+              <Button type="primary" key="log" onClick={sendResult}>
+                Record result
+              </Button>,
+              <Space
+                direction="horizontal"
+                style={{
+                  width: "100%",
+                  justifyContent: "center",
+                  paddingTop: "5px",
+                }}
+              >
+                <Text>{addResult}</Text>
+              </Space>,
+            ]}
+          />
+        </Modal>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
 

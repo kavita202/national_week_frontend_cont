@@ -2,11 +2,10 @@ import React, { useRef } from "react";
 import { ColumnChart } from "@opd/g2plot-react";
 
 export default function Graph({ graphData }) {
-  console.log(graphData);
   const chartRef = useRef();
   const config = {
     xField: "topic",
-    yField: "total",
+    yField: "average",
     xAxis: {
       title: {
         text: "Topic",

@@ -2,7 +2,11 @@ import { Statistic, Row, Col, Progress, Card } from "antd";
 import "antd/dist/antd.css";
 import Header from "../../components/header.js";
 import Graph from "../../components/graph.js";
-import Script from "next/script";
+import {
+  getSession,
+  userProfile,
+  withPageAuthRequired,
+} from "@auth0/nextjs-auth0";
 
 function calculateAverage(payload, total) {
   const totalScore = payload.reduce((prev, curr) => ({
@@ -18,21 +22,24 @@ function collateTopicScores(payload) {
   const graphdata = [];
 
   payload.forEach((item) => {
-    if (graphdata.find((obj) => obj.topic === item.topic) === undefined) {
-      graphdata.push({ topic: item.topic, total: item.score });
+    let index = graphdata.findIndex((obj) => obj.topic === item.topic);
+    if (index <= -1) {
+      graphdata.push({ topic: item.topic, total: [item.score], average: 0 });
     } else {
-      let index = graphdata.findIndex((obj) => obj.topic === item.topic);
-      console.log(
-        (graphdata[index].total =
-          Number(graphdata[index].total) + Number(item.score))
-      );
+      // ;
+      graphdata[index].total.push(Number(item.score));
     }
   });
-  return graphdata;
+  const graphdataAverage = graphdata.map((item) => ({
+    ...item,
+    average: (item.total.reduce((b, a) => a + b) / item.total.length).toFixed(
+      1
+    ),
+  }));
+  return graphdataAverage;
 }
 
 export default function Stats({ data }) {
-  console.log(data);
   let total = 0;
   let average = 0;
   let graphData = [];
@@ -41,7 +48,6 @@ export default function Stats({ data }) {
     total = calculateTotal(payload);
     average = calculateAverage(payload, total);
     graphData = collateTopicScores(payload);
-    console.log(graphData);
   }
 
   return (
@@ -98,20 +104,24 @@ export default function Stats({ data }) {
     </>
   );
 }
-
-export async function getServerSideProps(context) {
-  let topic = "all";
-  let { userId } = context.query;
-  const res = await fetch(`http://localhost:5000/progress`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      userId: userId,
-      topic: topic,
-    }),
-  });
-  let data = await res.json();
-  return { props: { data } };
-}
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(ctx) {
+    const session = getSession(ctx.req, ctx.res);
+    console.log(session);
+    let topic = "all";
+    const res = await fetch(`http://localhost:5000/progress`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: session.user.sub,
+        topic: topic,
+      }),
+    });
+    let data = await res.json();
+    console.log(data);
+    return { props: { data } };
+  },
+});
+// add a redirect if no user is found
