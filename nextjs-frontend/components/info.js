@@ -1,39 +1,49 @@
-import Image from "next/image";
-import { Carousel } from "antd";
+import { Typography, Button } from "antd";
+const { Title, Text } = Typography;
+import Infobox from "./infobox.js";
+import { Tooltip } from "antd";
 
-function Info({ imgPath, description, title, text }) {
-  const contentStyle = {
-    height: "160px",
-    color: "#fff",
-    lineHeight: "160px",
-    textAlign: "center",
-    background: "#364d79",
-  };
-
+function Info() {
   return (
-    <Carousel autoplay>
-      <div>
-        <h3 style={contentStyle}></h3>
-        <h2>{title}</h2>
-        <Image
-          src="https://miro.medium.com/max/1838/1*IH57PdfGRYTESy0nuMWx3w.png"
-          alt={description}
-          layout="responsive"
-          width={300}
-          height={300}
-        />
-        <div>{text}</div>
-      </div>
-      <div>
-        <h3 style={contentStyle}>2</h3>
-      </div>
-      <div>
-        <h3 style={contentStyle}>3</h3>
-      </div>
-      <div>
-        <h3 style={contentStyle}>4</h3>
-      </div>
-    </Carousel>
+    <div className="home">
+      <Title>School of Quizzes</Title>
+      <Title level={3} italic style={{ color: "#1890FF" }}>
+        "My biggest difficulty was retaining information throughout such an
+        intense bootcamp"
+      </Title>
+      <Text type="secondary">-Bootcamper, 2022</Text>
+      <Infobox
+        title="Overcome the forgetting curve"
+        description="Spaced repitition forces learning to be effortful, thus strengthening the connection between nerve cells in the brain. This helps you to retain information for longer and reduces cognitive overload"
+        link="/curve.png"
+        direct="https://www.studentdoctor.net/2018/07/31/spaced-repetition/"
+      />
+      <Infobox
+        title="Explore our Topics"
+        description="Quizzes are released weekly to mimic your bootcamp journey"
+        link="/topics.png"
+        direct="./topics"
+      />
+      <Infobox
+        title="Track your progress"
+        description="Monitor your results using the individualised progress tracker"
+        link="/topics.png"
+        direct="./topics"
+      />
+
+      <style jsx>{`
+        .home {
+          padding: 30px;
+          margin: 0 auto;
+          display: grid;
+          justify-content: center;
+          text-align: center;
+          gap: 10px;
+          max-width: 600px;
+        }
+      `}</style>
+      <Button>Get started</Button>
+    </div>
   );
 }
 export default Info;

@@ -3,23 +3,22 @@ import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0";
 import { Menu } from "antd";
 import "antd/dist/antd.css";
-import { UserOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  SettingOutlined,
+  LineChartOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+
 const { SubMenu } = Menu;
 export default function Header() {
   const { user } = useUser();
   return (
-    <Menu mode="horizontal">
+    <Menu mode="horizontal" theme="light">
       <Menu.Item key="Home">
         <Link href="/">
-          <h2>
-            <a>School of Quizzes</a>
-          </h2>
-        </Link>
-      </Menu.Item>
-      <Menu.Item key="Home2">
-        <Link href="/">
           <h3>
-            <a>Home</a>
+            <a>School of Quizzes</a>
           </h3>
         </Link>
       </Menu.Item>
@@ -35,28 +34,31 @@ export default function Header() {
         <SubMenu
           key="SubMenu"
           icon={
-            <UserOutlined
+            <img
+              src={user.picture}
               style={{
-                fontSize: "24px",
-                color: "#08c",
-                padding: "15px 0 0 10px",
+                height: "35px",
+                width: "35px",
+                alignItems: "center",
+                margin: "2px 0 0 10px",
               }}
-              theme="outlined"
             />
           }
           style={{ marginLeft: "auto" }}
         >
           <Menu.ItemGroup>
-            <Menu.Item key="user">{user.nickname}</Menu.Item>
-            <Menu.Item key="progress">
-              <Link href={`/progress`}>
+            <Menu.Item key="user" icon={<UserOutlined />}>
+              {user.nickname}
+            </Menu.Item>
+            <Menu.Item key="progress" icon={<LineChartOutlined />}>
+              <Link href="/progress">
                 <a>Progress</a>
               </Link>
             </Menu.Item>
             <Menu.Item key="settings" icon={<SettingOutlined />}>
               <a href="/">Settings</a>
             </Menu.Item>
-            <Menu.Item key="logout">
+            <Menu.Item key="logout" icon={<LogoutOutlined />}>
               <a href="/api/auth/logout" key="logout">
                 Log out
               </a>

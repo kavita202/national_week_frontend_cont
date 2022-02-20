@@ -1,7 +1,9 @@
 import { Statistic, Row, Col, Progress, Card } from "antd";
-import "antd/dist/antd.css";
-import Header from "../../components/header.js";
+// import "antd/dist/antd.css";
 import Graph from "../../components/graph.js";
+import TopicData from "../../components/graphtopics.js";
+import { API_URL } from "../../config/index.js";
+
 import {
   getSession,
   userProfile,
@@ -18,6 +20,11 @@ function calculateAverage(payload, total) {
 function calculateTotal(payload) {
   return payload.length;
 }
+function round(value, precision) {
+  var multiplier = Math.pow(10, precision || 0);
+  return Math.round(value * multiplier) / multiplier;
+}
+
 function collateTopicScores(payload) {
   const graphdata = [];
 
@@ -32,9 +39,7 @@ function collateTopicScores(payload) {
   });
   const graphdataAverage = graphdata.map((item) => ({
     ...item,
-    average: (item.total.reduce((b, a) => a + b) / item.total.length).toFixed(
-      1
-    ),
+    average: round(item.total.reduce((b, a) => a + b) / item.total.length, 1),
   }));
   return graphdataAverage;
 }
@@ -52,40 +57,46 @@ export default function Stats({ data }) {
 
   return (
     <>
-      <Header />
       {data && total && average ? (
-        <div className="stats">
-          <Row gutter={24}>
-            <Col span={8}>
-              <Statistic title="Quizzes attempted" value={total} />
-            </Col>
-            <Col span={8}>
-              <Statistic
-                title="Average score"
-                value={average}
-                precision={1}
-                suffix="/ 6"
-              />
-            </Col>
-            <Col span={8}>
-              <Statistic
-                title="Correctly answered"
-                value={" "}
-                prefix={
-                  <Progress
-                    type="circle"
-                    percent={Math.round((average / 6) * 100)}
-                    width={60}
-                  />
-                }
-              />
-            </Col>
-          </Row>
-          {/* <h2>Average score per topic</h2> */}
+        <>
+          <div className="stats">
+            <Row type="flex" align="middle" justify="end">
+              <Col span={8} align="middle">
+                <Statistic title="Quizzes attempted" value={total} />
+              </Col>
+              <Col span={8} align="middle">
+                <Statistic
+                  title="Average score"
+                  value={average}
+                  precision={1}
+                  suffix="/ 6"
+                />
+              </Col>
+              <Col span={8} align="middle">
+                <Statistic
+                  title="Correctly answered"
+                  value={" "}
+                  prefix={
+                    <Progress
+                      type="circle"
+                      percent={Math.round((average / 6) * 100)}
+                      width={60}
+                    />
+                  }
+                />
+              </Col>
+            </Row>
+          </div>
           <div className="graph">
+            <h2 style={{ color: "#6B35E8", fontFamily: "Cambria" }}>
+              Average score per topic
+            </h2>
             <Graph graphData={graphData} />
           </div>
-        </div>
+          <div className="topicgraph">
+            <TopicData />
+          </div>
+        </>
       ) : (
         <div></div>
       )}
@@ -93,12 +104,25 @@ export default function Stats({ data }) {
         .stats {
           max-width: 600px;
           margin: auto;
-          padding-top: 25px;
+          padding: 25px 0;
+          width: 90%;
         }
         .graph {
           box-shadow: 0 4px 8px 0 grey;
           padding: 50px;
           margin-top: 50px;
+          max-width: 70%;
+          margin: auto;
+        }
+        .graph > h2 {
+          text-align: center;
+          padding-bottom: 25px;
+          font-size: 2rem;
+        }
+        .topicgraph {
+          max-width: 70%;
+          margin: auto;
+          padding-top: 50px;
         }
       `}</style>
     </>
@@ -107,9 +131,8 @@ export default function Stats({ data }) {
 export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(ctx) {
     const session = getSession(ctx.req, ctx.res);
-    console.log(session);
     let topic = "all";
-    const res = await fetch(`http://localhost:5000/progress`, {
+    const res = await fetch(`${API_URL}/progress`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +143,6 @@ export const getServerSideProps = withPageAuthRequired({
       }),
     });
     let data = await res.json();
-    console.log(data);
     return { props: { data } };
   },
 });

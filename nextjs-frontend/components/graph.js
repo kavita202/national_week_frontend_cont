@@ -6,17 +6,16 @@ export default function Graph({ graphData }) {
   const config = {
     xField: "topic",
     yField: "average",
+    seriesField: ["average", "topic"],
+    color: "#1E1E1E",
     xAxis: {
       title: {
         text: "Topic",
         style: {
           fill: "black",
           fontSize: 20,
+          fontFamily: "Cambria",
         },
-      },
-      label: {
-        autoHide: true,
-        autoRotate: false,
       },
       tickLine: {
         style: {
@@ -28,6 +27,7 @@ export default function Graph({ graphData }) {
         style: {
           fill: "black",
           fontSize: 15,
+          fontFamily: "Cambria",
         },
       },
     },
@@ -37,6 +37,7 @@ export default function Graph({ graphData }) {
         style: {
           fontSize: 20,
           fill: "black",
+          fontFamily: "Cambria",
         },
       },
       grid: {
@@ -49,14 +50,13 @@ export default function Graph({ graphData }) {
         style: {
           fontSize: 15,
           fill: "black",
+          fontFamily: "Cambria",
         },
       },
     },
-    // color: "#a8ddb5",
     minColumnWidth: 20,
-    maxColumnWidth: 20,
+    maxColumnWidth: 30,
     data: graphData,
-    legend: { title: "Average score per topic" },
   };
 
   return <ColumnChart {...config} chartRef={chartRef} />;

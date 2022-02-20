@@ -35,10 +35,11 @@ export default function Topic({ title, imgPath, query }) {
             color: rgb(0, 0, 0);
             font-size: 20px;
             cursor: pointer;
-            box-shadow: 0 4px 8px 0 #caf0f8;
+            box-shadow: 0 3px 10px rgb(30 30 30 / 0.2);
           }
           .week-names {
             text-align: center;
+            color: #1e1e1e;
           }
         `}
       </style>

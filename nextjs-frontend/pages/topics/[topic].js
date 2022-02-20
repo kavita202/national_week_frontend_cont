@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import MCQ from "../../components/mcq";
 import TopicHeader from "../../components/topicHeader.js";
-import Header from "../../components/header";
 import Written from "../../components/text";
 import Popup from "../../components/popup.js";
 import { Button, Typography, Form, Modal, Space, Result } from "antd";
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import { useUser } from "@auth0/nextjs-auth0";
+import { API_URL } from "../../config/index.js";
 
 function shuffleArray(array) {
   let i = array.length;
@@ -48,7 +48,6 @@ function QuestionPage({ data, topic }) {
       ]);
       setShuffledAns(answerArray.map((set) => shuffleArray(set)));
     }
-    console.log(data);
   }, [data]);
 
   function showModal() {
@@ -70,7 +69,7 @@ function QuestionPage({ data, topic }) {
     } else if (user) {
       const userId = user.sub;
       try {
-        fetch("http://localhost:5000/progress", {
+        fetch(`${API_URL}/progress`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -81,7 +80,6 @@ function QuestionPage({ data, topic }) {
             score: result,
           }),
         });
-        console.log(result);
         setAddResult("Result saved");
       } catch (error) {
         setAddResult("Please try again");
@@ -92,7 +90,6 @@ function QuestionPage({ data, topic }) {
   if (shuffledAns.length > 1 && data) {
     return (
       <>
-        <Header />
         <TopicHeader topic={topic[0].toUpperCase() + topic.slice(1)} />
         <div className="question_Section">
           <Form onFinish={compare}>
@@ -163,7 +160,7 @@ function QuestionPage({ data, topic }) {
 
 export async function getServerSideProps(context) {
   const { topic } = context.query;
-  const res = await fetch(`http://localhost:5000/questions?topic=${topic}`);
+  const res = await fetch(`${API_URL}/questions?topic=${topic}`);
   let data = await res.json();
   data = data.payload;
   return { props: { data, topic } };
