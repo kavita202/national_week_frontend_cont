@@ -1,39 +1,75 @@
 import { Layout, Menu, Breadcrumb } from "antd";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 const { Header, Content, Footer, Sider } = Layout;
-const images = {
-  Javascript:
-    "https://www.freepnglogos.com/uploads/javascript-png/javascript-vector-logo-yellow-png-transparent-javascript-vector-12.png",
-  Frontend:
-    "https://www.logolynx.com/images/logolynx/0d/0d35ef6c8d4fdaf0590228404dc6448b.png",
-  Backend: "https://nodejs.org/static/images/logo-hexagon-card.png",
-  Database:
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTER_wnWHgS2z0Kra1UyKRv-ez3DGqTOP4nzSDq-sYmEkF2m5-Gayi8NNFdATDeVLYYEQI&usqp=CAU",
-  Testing:
-    "https://seeklogo.com/images/J/jest-logo-F9901EBBF7-seeklogo.com.png",
-  React_basics:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png",
-  React_advanced: "https://pluginicons.craft-cdn.com/react.svg?1527521614",
-  Agile:
-    "https://cdn.vectorstock.com/i/thumb-large/69/21/agile-icon-methodology-development-scrum-vector-30766921.jpg",
-  Computer_science:
-    "https://www.kindpng.com/picc/m/78-786173_computer-science-logo-png-transparent-png.png",
-  Architecture: "https://images.ukdissertations.com/119/0520653188015.001.png",
-};
+import { images } from "./images";
+import Graph from "./graph";
+import React, { useState } from "react";
+export default function TopicData({ graphData, getTopicForGraph, topic }) {
+  const [collapsed, setCollapsed] = useState(false);
 
-export default function TopicData() {
+  function onCollapse() {
+    setCollapsed(!collapsed);
+  }
   return (
     <Layout
       style={{
         minHeight: "400px",
       }}
     >
-      <Sider width={200}>
-        <div className="logo" />
-        <Menu defaultSelectedKeys={["javascript"]} mode="inline">
-          <Menu.Item key={images[0]}>efkcnwei</Menu.Item>
+      <Sider width={200} collapsible collapsed={collapsed} trigger={null}>
+        <Menu defaultSelectedKeys={["overview"]} mode="inline">
+          <Menu.Item key="overview">Overview</Menu.Item>
+          {Object.keys(images).map((key) => (
+            <Menu.Item
+              icon={
+                <img
+                  src={images[key]}
+                  style={{ height: "20px", width: "20px" }}
+                ></img>
+              }
+              key={key}
+              onClick={() => getTopicForGraph(key)}
+            >
+              {key}
+            </Menu.Item>
+          ))}
         </Menu>
       </Sider>
-      <Content style={{ padding: "0 24px", minHeight: 280 }}>Content</Content>
+      <Layout id="site-layout">
+        <Header
+          className="site-layout-background"
+          style={{
+            padding: 0,
+            background: "#fff",
+          }}
+        >
+          {React.createElement(
+            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+            {
+              onClick: onCollapse,
+              className: "trigger",
+              style: {
+                padding: "0 24px",
+                fontSize: "24px",
+                lineHeight: "64px",
+                cursor: "pointer",
+                transition: "color 0.3s",
+              },
+              hover: { color: "red" },
+            }
+          )}
+        </Header>
+        <Content
+          style={{
+            background: "#fff",
+            margin: "24px 16px",
+            padding: "0 24px",
+            minHeight: 280,
+          }}
+        >
+          <Graph graphData={graphData} topic={topic} />
+        </Content>
+      </Layout>
     </Layout>
   );
 }

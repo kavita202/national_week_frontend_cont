@@ -1,16 +1,17 @@
 import React, { useRef } from "react";
 import { ColumnChart } from "@opd/g2plot-react";
 
-export default function Graph({ graphData }) {
+export default function Graph({ graphData, yAxis, xAxis }) {
+  console.log(graphData);
   const chartRef = useRef();
   const config = {
-    xField: "topic",
-    yField: "average",
-    seriesField: ["average", "topic"],
+    xField: "time",
+    yField: "score",
+    // seriesField: ["average", "topic"],
     color: "#1E1E1E",
     xAxis: {
       title: {
-        text: "Topic",
+        text: "Score",
         style: {
           fill: "black",
           fontSize: 20,
@@ -26,14 +27,14 @@ export default function Graph({ graphData }) {
       label: {
         style: {
           fill: "black",
-          fontSize: 15,
+          fontSize: 20,
           fontFamily: "Cambria",
         },
       },
     },
     yAxis: {
       title: {
-        text: "Average score",
+        text: "Date",
         style: {
           fontSize: 20,
           fill: "black",
@@ -48,7 +49,7 @@ export default function Graph({ graphData }) {
       },
       label: {
         style: {
-          fontSize: 15,
+          fontSize: 20,
           fill: "black",
           fontFamily: "Cambria",
         },
@@ -59,5 +60,23 @@ export default function Graph({ graphData }) {
     data: graphData,
   };
 
-  return <ColumnChart {...config} chartRef={chartRef} />;
+  return (
+    <div className="graph">
+      <ColumnChart {...config} chartRef={chartRef} />
+      <style jsx>{`
+        .graph {
+          // box-shadow: 0 4px 8px 0 grey;
+          padding: 20px;
+          margin-top: 50px;
+          max-width: 90%;
+          margin: auto;
+        }
+        .graph > h2 {
+          text-align: center;
+          padding-bottom: 10px;
+          font-size: 1.5em;
+        }
+      `}</style>
+    </div>
+  );
 }

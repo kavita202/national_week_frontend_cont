@@ -9,10 +9,9 @@ const images = {
   Testing:
     "https://seeklogo.com/images/J/jest-logo-F9901EBBF7-seeklogo.com.png",
   React_basics:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png",
+    "https://pbs.twimg.com/profile_images/446356636710363136/OYIaJ1KK_400x400.png",
   React_advanced: "https://pluginicons.craft-cdn.com/react.svg?1527521614",
-  Agile:
-    "https://cdn.vectorstock.com/i/thumb-large/69/21/agile-icon-methodology-development-scrum-vector-30766921.jpg",
+  Agile: "https://www.smartsheet.com/sites/default/files/agile-lifecycle.png",
   Computer_science:
     "https://www.kindpng.com/picc/m/78-786173_computer-science-logo-png-transparent-png.png",
   Architecture: "https://images.ukdissertations.com/119/0520653188015.001.png",

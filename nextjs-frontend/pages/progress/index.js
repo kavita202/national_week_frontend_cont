@@ -1,9 +1,8 @@
 import { Statistic, Row, Col, Progress, Card } from "antd";
-// import "antd/dist/antd.css";
 import Graph from "../../components/graph.js";
 import TopicData from "../../components/graphtopics.js";
 import { API_URL } from "../../config/index.js";
-
+import { useState } from "react";
 import {
   getSession,
   userProfile,
@@ -26,33 +25,58 @@ function round(value, precision) {
 }
 
 function collateTopicScores(payload) {
-  const graphdata = [];
-
+  let graphDataOverview = [];
   payload.forEach((item) => {
-    let index = graphdata.findIndex((obj) => obj.topic === item.topic);
+    let index = graphDataOverview.findIndex((obj) => obj.topic === item.topic);
     if (index <= -1) {
-      graphdata.push({ topic: item.topic, total: [item.score], average: 0 });
+      graphDataOverview.push({
+        topic: item.topic,
+        total: [item.score],
+        average: 0,
+      });
     } else {
       // ;
-      graphdata[index].total.push(Number(item.score));
+      graphDataOverview[index].total.push(Number(item.score));
     }
   });
-  const graphdataAverage = graphdata.map((item) => ({
+  const Average = graphDataOverview.map((item) => ({
     ...item,
     average: round(item.total.reduce((b, a) => a + b) / item.total.length, 1),
   }));
-  return graphdataAverage;
+  return Average;
 }
 
 export default function Stats({ data }) {
+  const [graphData, setGraphData] = useState([]);
+  const [topic, setTopic] = useState("");
   let total = 0;
   let average = 0;
-  let graphData = [];
   if (data.payload) {
     const { payload } = data;
     total = calculateTotal(payload);
     average = calculateAverage(payload, total);
-    graphData = collateTopicScores(payload);
+    collateTopicScores(payload);
+  }
+
+  // wrap in a callback to ensure function does not rerender
+  function getTopicForGraph(topic) {
+    setTopic(topic);
+    if (data.payload) {
+      const { payload } = data;
+      const topicData = payload.filter((item) => {
+        return item.topic.toLowerCase() === topic.toLowerCase();
+      });
+      const topicDataParsed = topicData.map((item) => {
+        // let newtime = new Date(item.time).toString().slice(5, 3);
+        let newtime = `${new Date(item.time).getDate()}/${
+          new Date(item.time).getMonth() + 1
+        }`;
+        return { ...item, time: newtime };
+      });
+      setGraphData(topicDataParsed);
+    }
+
+    // find a function to reduce the date (date())
   }
 
   return (
@@ -87,14 +111,12 @@ export default function Stats({ data }) {
               </Col>
             </Row>
           </div>
-          <div className="graph">
-            <h2 style={{ color: "#6B35E8", fontFamily: "Cambria" }}>
-              Average score per topic
-            </h2>
-            <Graph graphData={graphData} />
-          </div>
           <div className="topicgraph">
-            <TopicData />
+            <TopicData
+              graphData={graphData}
+              getTopicForGraph={getTopicForGraph}
+              topic={topic}
+            />
           </div>
         </>
       ) : (
@@ -107,18 +129,7 @@ export default function Stats({ data }) {
           padding: 25px 0;
           width: 90%;
         }
-        .graph {
-          box-shadow: 0 4px 8px 0 grey;
-          padding: 50px;
-          margin-top: 50px;
-          max-width: 70%;
-          margin: auto;
-        }
-        .graph > h2 {
-          text-align: center;
-          padding-bottom: 25px;
-          font-size: 2rem;
-        }
+
         .topicgraph {
           max-width: 70%;
           margin: auto;
@@ -143,6 +154,14 @@ export const getServerSideProps = withPageAuthRequired({
       }),
     });
     let data = await res.json();
+    if (data.payload.length === 0) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/topics",
+        },
+      };
+    }
     return { props: { data } };
   },
 });

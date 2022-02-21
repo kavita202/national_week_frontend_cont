@@ -33,7 +33,7 @@ export default function TopicPage() {
         <Topic
           query="react_basics"
           title="Week 7 - React Basics"
-          imgPath="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png"
+          imgPath="https://pbs.twimg.com/profile_images/446356636710363136/OYIaJ1KK_400x400.png"
         ></Topic>
         <Topic
           query="react_advanced"
@@ -43,7 +43,7 @@ export default function TopicPage() {
         <Topic
           query="agile"
           title="Week 9 - Agile"
-          imgPath="https://cdn.vectorstock.com/i/thumb-large/69/21/agile-icon-methodology-development-scrum-vector-30766921.jpg"
+          imgPath="https://www.smartsheet.com/sites/default/files/agile-lifecycle.png"
         ></Topic>
         <Topic
           query="computer_science"
