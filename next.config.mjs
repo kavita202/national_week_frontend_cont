@@ -2,17 +2,14 @@ export default {
   images: {
     domains: [
       "www.freepnglogos.com",
-      "images.ukdissertations.com",
-      "www.kindpng.com",
-      "cdn.vectorstock.com",
-      "pluginicons.craft-cdn.com",
-      "pbs.twimg.com",
-      "seeklogo.com",
-      "encrypted-tbn0.gstatic.com",
-      "nodejs.org",
       "www.logolynx.com",
-      "miro.medium.com",
+      "nodejs.org",
+      "encrypted-tbn0.gstatic.com",
+      "seeklogo.com",
+      "pbs.twimg.com",
       "www.smartsheet.com",
+      "iconape.com",
+      "images.ukdissertations.com",
     ],
   },
   env: {

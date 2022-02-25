@@ -1,8 +1,8 @@
 import { Statistic, Row, Col, Progress, Card } from "antd";
-import Graph from "../../components/graph.js";
+import GraphOverview from "../../components/graphOverview.js";
 import TopicData from "../../components/graphtopics.js";
 import { API_URL } from "../../config/index.js";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   getSession,
   userProfile,
@@ -47,22 +47,35 @@ function collateTopicScores(payload) {
 }
 
 export default function Stats({ data }) {
+  const [Total, setTotal] = useState(0);
+  const [Average, setAverage] = useState(0);
   const [graphData, setGraphData] = useState([]);
   const [topic, setTopic] = useState("");
+  const [overviewData, setOverviewData] = useState({});
+
   let total = 0;
   let average = 0;
-  if (data.payload) {
-    const { payload } = data;
-    total = calculateTotal(payload);
-    average = calculateAverage(payload, total);
-    collateTopicScores(payload);
-  }
 
-  // wrap in a callback to ensure function does not rerender
-  function getTopicForGraph(topic) {
-    setTopic(topic);
+  // this should be wrapped in a usememo
+  const calculation = useMemo(() => {
     if (data.payload) {
       const { payload } = data;
+      total = calculateTotal(payload);
+      setTotal(total);
+      average = calculateAverage(payload, total);
+      setAverage(average);
+      const overviewdata = collateTopicScores(payload);
+      setOverviewData(overviewdata);
+    }
+  }, [data]);
+
+  function getTopicForGraph(topic) {
+    const { payload } = data;
+    if (topic === "overview") {
+      setGraphData(overviewData);
+    }
+    setTopic(topic);
+    if (data.payload && topic !== "overview") {
       const topicData = payload.filter((item) => {
         return item.topic.toLowerCase() === topic.toLowerCase();
       });
@@ -81,17 +94,17 @@ export default function Stats({ data }) {
 
   return (
     <>
-      {data && total && average ? (
+      {data ? (
         <>
           <div className="stats">
             <Row type="flex" align="middle" justify="end">
               <Col span={8} align="middle">
-                <Statistic title="Quizzes attempted" value={total} />
+                <Statistic title="Quizzes attempted" value={Total} />
               </Col>
               <Col span={8} align="middle">
                 <Statistic
                   title="Average score"
-                  value={average}
+                  value={Average}
                   precision={1}
                   suffix="/ 6"
                 />
@@ -103,7 +116,7 @@ export default function Stats({ data }) {
                   prefix={
                     <Progress
                       type="circle"
-                      percent={Math.round((average / 6) * 100)}
+                      percent={Math.round((Average / 6) * 100)}
                       width={60}
                     />
                   }
@@ -134,6 +147,12 @@ export default function Stats({ data }) {
           max-width: 70%;
           margin: auto;
           padding-top: 50px;
+        }
+
+        @media only screen and (max-width: 700px) {
+          .topicgraph {
+            max-width: 90%;
+          }
         }
       `}</style>
     </>

@@ -15,12 +15,12 @@ function Info() {
       <Infobox
         title="Overcome the forgetting curve"
         description="Spaced repitition forces learning to be effortful, thus strengthening the connection between nerve cells in the brain. This helps you to retain information for longer and reduces cognitive overload"
-        link="/curve.png"
+        link="/curve2.png"
         direct="https://www.studentdoctor.net/2018/07/31/spaced-repetition/"
       />
       <Infobox
         title="Explore our Topics"
-        description="Quizzes are released weekly to mimic your bootcamp journey"
+        description="Question sets are randomised and based on a topic of your choice"
         link="/topics.png"
         direct="./topics"
       />
@@ -28,7 +28,7 @@ function Info() {
         title="Track your progress"
         description="Monitor your results using the individualised progress tracker"
         link="/topics.png"
-        direct="./topics"
+        direct="./progress"
       />
 
       <style jsx>{`

@@ -160,6 +160,7 @@ function QuestionPage({ data, topic }) {
 
 export async function getServerSideProps(context) {
   const { topic } = context.query;
+  console.log(topic);
   const res = await fetch(`${API_URL}/questions?topic=${topic}`);
   let data = await res.json();
   data = data.payload;

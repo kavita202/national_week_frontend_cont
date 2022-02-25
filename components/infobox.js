@@ -16,7 +16,7 @@ export default function InfoBox({ direct, title, description, link }) {
         cover={<img src={link} alt={title} />}
         style={{ padding: "30px" }}
       >
-        <p style={{ color: "#1E1E1E", fontSize: "0.9rem" }}>{description}</p>
+        <p style={{ color: "#1E1E1E", fontSize: "1rem" }}>{description}</p>
       </Card>
     </Link>
   );

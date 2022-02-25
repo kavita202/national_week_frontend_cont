@@ -1,17 +1,17 @@
 import React, { useRef } from "react";
 import { ColumnChart } from "@opd/g2plot-react";
 
-export default function Graph({ graphData, yAxis, xAxis }) {
+export default function Graph({ graphData, topic }) {
   console.log(graphData);
   const chartRef = useRef();
   const config = {
-    xField: "time",
-    yField: "score",
+    xField: topic === "overview" ? "topic" : "time",
+    yField: topic === "overview" ? "average" : "score",
     // seriesField: ["average", "topic"],
     color: "#1E1E1E",
     xAxis: {
       title: {
-        text: "Score",
+        text: topic === "overview" ? "Topic" : "Date",
         style: {
           fill: "black",
           fontSize: 20,
@@ -34,7 +34,7 @@ export default function Graph({ graphData, yAxis, xAxis }) {
     },
     yAxis: {
       title: {
-        text: "Date",
+        text: "Score",
         style: {
           fontSize: 20,
           fill: "black",

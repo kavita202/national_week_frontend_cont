@@ -26,7 +26,7 @@ function TopicHeader({ topic }) {
             style={{ background: "#5400FF", border: "#5400FF" }}
           >
             Shuffle Questions
-          </Button>,
+          </Button>
         ]}
       />
     </>
