@@ -12,8 +12,11 @@ const images = {
   Agile: "https://www.smartsheet.com/sites/default/files/agile-lifecycle.png",
   Computer_science:
     "https://www.kindpng.com/picc/m/78-786173_computer-science-logo-png-transparent-png.png",
-  Architecture: "https://images.ukdissertations.com/119/0520653188015.001.png",
+  Architecture:
+    "https://nimbus-screenshots.s3.amazonaws.com/s/bec5e003a13e15ef098551d10939f04a.png",
   TypeScript: "https://iconape.com/wp-content/png_logo_vector/typescript.png",
+  Security:
+    "https://images.assetsdelivery.com/compings_v2/azvector/azvector1811/azvector181100097.jpg",
 };
 
 export { images };

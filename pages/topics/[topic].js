@@ -25,6 +25,7 @@ function QuestionPage({ data, topic }) {
   const [answer, setAnswer] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [addResult, setAddResult] = useState("");
+  const [visiblebutton, setVisibleButton] = useState(false);
   const { user } = useUser();
 
   function compare(values) {
@@ -82,6 +83,7 @@ function QuestionPage({ data, topic }) {
           }),
         });
         setAddResult("Result saved");
+        setVisibleButton(true);
       } catch (error) {
         setAddResult("Please try again");
       }
@@ -124,18 +126,23 @@ function QuestionPage({ data, topic }) {
           `}</style>
           <Modal
             title="Result"
-            onCancel={showCorrect}
-            onOk={reattempt}
+            onOk={showCorrect}
+            onCancel={reattempt}
             visible={isModalVisible}
-            cancelText="Show correct answers"
-            okText="Reattempt"
+            cancelText="Reattempt"
+            okText="Show correct answers"
           >
             <Result
               icon={result > 4 ? <SmileOutlined /> : <FrownOutlined />}
               title={`You scored: ${result}`}
               subTitle={result > 5 ? "Well done!" : ""}
               extra={[
-                <Button type="primary" key="log" onClick={sendResult}>
+                <Button
+                  type="primary"
+                  key="log"
+                  onClick={sendResult}
+                  disabled={visiblebutton}
+                >
                   Record result
                 </Button>,
                 <Space

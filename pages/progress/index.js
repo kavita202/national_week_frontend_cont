@@ -105,7 +105,6 @@ export default function Stats({ data }) {
                   title="Average score"
                   value={Average}
                   precision={1}
-                  suffix="/ 6"
                 />
               </Col>
               <Col span={8} align="middle">
@@ -115,7 +114,7 @@ export default function Stats({ data }) {
                   prefix={
                     <Progress
                       type="circle"
-                      percent={Math.round((Average / 6) * 100)}
+                      percent={Math.round((Average / 10) * 100)}
                       width={60}
                     />
                   }

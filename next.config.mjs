@@ -9,7 +9,8 @@ export default {
       "pbs.twimg.com",
       "www.smartsheet.com",
       "iconape.com",
-      "images.ukdissertations.com",
+      "nimbus-screenshots.s3.amazonaws.com",
+      "images.assetsdelivery.com",
     ],
   },
   env: {
