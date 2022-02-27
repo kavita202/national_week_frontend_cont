@@ -1,5 +1,4 @@
 import { Statistic, Row, Col, Progress, Card } from "antd";
-import GraphOverview from "../../components/graphOverview.js";
 import TopicData from "../../components/graphtopics.js";
 import { API_URL } from "../../config/index.js";
 import { useState, useMemo } from "react";
