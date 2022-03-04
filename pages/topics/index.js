@@ -7,23 +7,23 @@ import { topics } from "../../components/images.js";
 import { useEffect, useState } from "react";
 
 // topic requires query,
-export default function Home({ data }) {
-  const [repeatData, setRepeatData] = useState([]);
-  let formattedData = {};
+export default function Home() {
+  // const [repeatData, setRepeatData] = useState([]);
+  // let formattedData = {};
 
-  useEffect(() => {
-    if (data) {
-      data.payload.forEach((obj) => {
-        let items = obj.row.split(",");
-        let topicValue = items[0].slice(1);
-        let dueDateValue = new Date(items[1].slice(1, 11))
-          .toString()
-          .slice(4, 10);
-        formattedData = { ...formattedData, [topicValue]: dueDateValue };
-      });
-      setRepeatData(formattedData);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     data.payload.forEach((obj) => {
+  //       let items = obj.row.split(",");
+  //       let topicValue = items[0].slice(1);
+  //       let dueDateValue = new Date(items[1].slice(1, 11))
+  //         .toString()
+  //         .slice(4, 10);
+  //       formattedData = { ...formattedData, [topicValue]: dueDateValue };
+  //     });
+  //     setRepeatData(formattedData);
+  //   }
+  // }, [data]);
   return (
     <div className="container">
       <Layout>
@@ -70,19 +70,19 @@ export default function Home({ data }) {
   );
 }
 
-export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps(ctx) {
-    const session = getSession(ctx.req, ctx.res);
-    const response = await fetch(`${API_URL}/repeat`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: session.user.sub,
-      }),
-    });
-    let data = await response.json();
-    return { props: { data } };
-  },
-});
+// export const getServerSideProps = withPageAuthRequired({
+//   async getServerSideProps(ctx) {
+//     const session = getSession(ctx.req, ctx.res);
+//     const response = await fetch(`${API_URL}/repeat`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         userId: session.user.sub,
+//       }),
+//     });
+//     let data = await response.json();
+//     return { props: { data } };
+//   },
+// });
