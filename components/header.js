@@ -13,6 +13,7 @@ import {
 const { SubMenu } = Menu;
 export default function Header() {
   const { user } = useUser();
+
   return (
     <Menu mode="horizontal" theme="light">
       <Menu.Item key="Home">
@@ -47,9 +48,6 @@ export default function Header() {
           style={{ marginLeft: "auto" }}
         >
           <Menu.ItemGroup>
-            <Menu.Item key="user" icon={<UserOutlined />}>
-              {user.nickname}
-            </Menu.Item>
             <Menu.Item key="progress" icon={<LineChartOutlined />}>
               <Link href="/progress">
                 <a>Progress</a>

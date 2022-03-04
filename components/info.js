@@ -1,7 +1,6 @@
 import { Typography, Button } from "antd";
 const { Title, Text } = Typography;
 import Infobox from "./infobox.js";
-import { Tooltip } from "antd";
 
 function Info() {
   return (
@@ -14,7 +13,7 @@ function Info() {
       <Text type="secondary">-Bootcamper, 2022</Text>
       <Infobox
         title="Overcome the forgetting curve"
-        description="Spaced repitition forces learning to be effortful, thus strengthening the connection between nerve cells in the brain. This helps you to retain information for longer and reduces cognitive overload"
+        description="Spaced repetition forces learning to be effortful, thus strengthening the connection between nerve cells in the brain. This helps you to retain information for longer and reduces cognitive overload"
         link="/curve2.png"
         direct="https://www.studentdoctor.net/2018/07/31/spaced-repetition/"
       />
@@ -27,10 +26,10 @@ function Info() {
       <Infobox
         title="Track your progress"
         description="Monitor your results using the individualised progress tracker"
-        link="/topics.png"
+        link="/progress2.png"
         direct="./progress"
       />
-
+      <Button size="large">Get started</Button>
       <style jsx>{`
         .home {
           padding: 30px;
@@ -41,8 +40,12 @@ function Info() {
           gap: 10px;
           max-width: 600px;
         }
+        .home > .ant-btn {
+          padding: 3em;
+          color: red;
+          max-width: 200px;
+        }
       `}</style>
-      <Button>Get started</Button>
     </div>
   );
 }

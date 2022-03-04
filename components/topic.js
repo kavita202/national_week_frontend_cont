@@ -1,18 +1,20 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-export default function Topic({ title, imgPath, query }) {
+export default function Topic({ title, imgPath, dueDate }) {
   const router = useRouter();
-
   return (
     <div>
-      <h3 className="week-names">{title}</h3>
+      <div className="topicTitle">
+        <h3 className="week-names">{title}</h3>
+        {dueDate ? <h3 className="dueDate">{dueDate}</h3> : <></>}
+      </div>
       <div
         id={title}
         onClick={() =>
           router.push({
             pathname: "/topics/[topic]",
-            query: { topic: query },
+            query: { topic: title },
           })
         }
         className="topic"
@@ -37,9 +39,15 @@ export default function Topic({ title, imgPath, query }) {
             cursor: pointer;
             box-shadow: 0 3px 10px rgb(30 30 30 / 0.2);
           }
+          .topicTitle {
+            display: flex;
+            justify-content: space-around;
+          }
           .week-names {
-            text-align: center;
-            color: #1e1e1e;
+            padding-left: 12px;
+          }
+          .dueDate {
+            padding-right: 10px;
           }
         `}
       </style>

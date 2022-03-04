@@ -1,0 +1,11 @@
+.center {
+  max-width: 1000px;
+  margin: auto;
+  padding: 25px 0;
+  text-align: center;
+}
+
+.greeting {
+  padding: 1em 0;
+  font-size: 3em;
+}

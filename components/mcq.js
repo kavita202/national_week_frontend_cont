@@ -1,7 +1,5 @@
-import { nanoid } from "nanoid";
 import { Form, Radio, Space } from "antd";
 function MCQ({ i, shuffledAns, answer }) {
-  console.log(answer);
   return (
     <Form.Item
       name={i}

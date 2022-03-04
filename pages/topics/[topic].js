@@ -5,10 +5,10 @@ import TopicHeader from "../../components/topicHeader.js";
 import Written from "../../components/text";
 import Popup from "../../components/popup.js";
 import { Button, Typography, Form, Modal, Space, Result } from "antd";
-// import "antd/dist/antd.css";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import { useUser } from "@auth0/nextjs-auth0";
 import { API_URL } from "../../config/index.js";
+import repeat from "../../components/repeat.js";
 
 function shuffleArray(array) {
   let i = array.length;
@@ -64,14 +64,14 @@ function QuestionPage({ data, topic }) {
     setIsModalVisible(false);
   };
 
-  const sendResult = useCallback(() => {
+  const sendResult = useCallback(async () => {
     if (!user) {
       setAddResult("Please sign in to track your progress");
     } else if (user) {
       const userId = user.sub;
 
       try {
-        fetch(`${API_URL}/progress`, {
+        const response = await fetch(`${API_URL}/progress`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -84,6 +84,7 @@ function QuestionPage({ data, topic }) {
         });
         setAddResult("Result saved");
         setVisibleButton(true);
+        repeat(response, topic, result, userId);
       } catch (error) {
         setAddResult("Please try again");
       }

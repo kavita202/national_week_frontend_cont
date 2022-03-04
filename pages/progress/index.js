@@ -1,12 +1,8 @@
 import { Statistic, Row, Col, Progress, Card } from "antd";
 import TopicData from "../../components/graphtopics.js";
 import { API_URL } from "../../config/index.js";
-import { useState, useMemo } from "react";
-import {
-  getSession,
-  userProfile,
-  withPageAuthRequired,
-} from "@auth0/nextjs-auth0";
+import { useState, useEffect } from "react";
+import { getSession, useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 function calculateAverage(payload, total) {
   const totalScore = payload.reduce((prev, curr) => ({
@@ -45,26 +41,27 @@ function collateTopicScores(payload) {
   return Average;
 }
 
-export default function Stats({ data }) {
+export default function Stats({ data, data2 }) {
   const [Total, setTotal] = useState(0);
   const [Average, setAverage] = useState(0);
   const [graphData, setGraphData] = useState([]);
   const [topic, setTopic] = useState("");
   const [overviewData, setOverviewData] = useState({});
-
+  const { user } = useUser();
   let total = 0;
   let average = 0;
 
-  // this should be wrapped in a usememo
-  const calculation = useMemo(() => {
+  useEffect(() => {
     if (data.payload) {
       const { payload } = data;
       total = calculateTotal(payload);
       setTotal(total);
       average = calculateAverage(payload, total);
       setAverage(average);
-      const overviewdata = collateTopicScores(payload);
-      setOverviewData(overviewdata);
+      const averageData = collateTopicScores(payload);
+      setOverviewData(averageData);
+      setGraphData(averageData);
+      setTopic("overview");
     }
   }, [data]);
 
@@ -90,21 +87,28 @@ export default function Stats({ data }) {
 
     // find a function to reduce the date (date())
   }
+  let username;
+  if (user) {
+    if ("given_name" in user) {
+      username = user.given_name;
+    } else username = user.nickname;
+  }
 
   return (
     <>
-      {data ? (
-        <>
-          <div className="stats">
+      {data && graphData ? (
+        <div className="center">
+          <h1 className="greeting">{`${username}'s progress page`}</h1>
+          <div>
             <Row type="flex" align="middle" justify="end">
               <Col span={8} align="middle">
-                <Statistic title="Quizzes attempted" value={Total} />
-              </Col>
-              <Col span={8} align="middle">
                 <Statistic
-                  title="Average score"
-                  value={Average}
-                  precision={1}
+                  title="Quizzes attempted"
+                  value={Total}
+                  valueStyle={{
+                    fontSize: "2.5rem",
+                    color: "#5400FF",
+                  }}
                 />
               </Col>
               <Col span={8} align="middle">
@@ -115,34 +119,40 @@ export default function Stats({ data }) {
                     <Progress
                       type="circle"
                       percent={Math.round((Average / 10) * 100)}
-                      width={60}
+                      width={100}
+                      strokeColor={"#5400FF"}
+                      style={{ paddingTop: "15px" }}
                     />
                   }
                 />
               </Col>
+              <Col span={8} align="middle">
+                <Statistic
+                  title="Average score"
+                  value={Average}
+                  precision={1}
+                  valueStyle={{
+                    fontSize: "2.5rem",
+                    color: "#5400FF",
+                  }}
+                />
+              </Col>
             </Row>
           </div>
-          <div className="topicgraph">
+          <div className="data">
             <TopicData
               graphData={graphData}
               getTopicForGraph={getTopicForGraph}
               topic={topic}
             />
           </div>
-        </>
+        </div>
       ) : (
-        <div></div>
+        <></>
       )}
       <style jsx>{`
-        .stats {
-          max-width: 600px;
-          margin: auto;
-          padding: 25px 0;
-          width: 90%;
-        }
-
-        .topicgraph {
-          max-width: 70%;
+        .data {
+          max-width: 100%;
           margin: auto;
           padding-top: 50px;
         }

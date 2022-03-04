@@ -7,8 +7,7 @@ export default function Graph({ graphData, topic }) {
   const config = {
     xField: topic === "overview" ? "topic" : "time",
     yField: topic === "overview" ? "average" : "score",
-    // seriesField: ["average", "topic"],
-    color: "#1E1E1E",
+    color: topic === "overview" ? "#1890ff" : "#5400FF",
     xAxis: {
       title: {
         text: topic === "overview" ? "Topic" : "Date",
@@ -34,7 +33,7 @@ export default function Graph({ graphData, topic }) {
     },
     yAxis: {
       title: {
-        text: "Score",
+        text: topic === "overview" ? "Average Score" : "Score",
         style: {
           fontSize: 20,
           fill: "black",
