@@ -1,10 +1,10 @@
 import Head from "next/head";
 import Layout from "../../components/layout.js";
 import Topic from "../../components/topic";
-import { getSession, useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { API_URL } from "../../config/index.js";
+// import { getSession, useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
+// import { API_URL } from "../../config/index.js";
 import { topics } from "../../components/images.js";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 // topic requires query,
 export default function Home() {

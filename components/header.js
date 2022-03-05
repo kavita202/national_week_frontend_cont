@@ -24,10 +24,10 @@ export default function Header() {
         </Link>
       </Menu.Item>
       <Menu.Item key="Extra">
-        <Link href="/topics">
-          <h3>
-            <a>Topics</a>
-          </h3>
+        <Link href="/topics" passHref>
+          {/* <h3> */}
+          <a>Topics</a>
+          {/* </h3> */}
         </Link>
       </Menu.Item>
 

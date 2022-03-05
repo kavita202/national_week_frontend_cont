@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { nanoid } from "nanoid";
 import MCQ from "../../components/mcq";
 import TopicHeader from "../../components/topicHeader.js";
-import Written from "../../components/text";
-import Popup from "../../components/popup.js";
 import { Button, Typography, Form, Modal, Space, Result } from "antd";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import { useUser } from "@auth0/nextjs-auth0";
@@ -143,6 +140,7 @@ function QuestionPage({ data, topic }) {
                   key="log"
                   onClick={sendResult}
                   disabled={visiblebutton}
+                  id="record"
                 >
                   Record result
                 </Button>,
