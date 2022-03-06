@@ -41,7 +41,7 @@ function collateTopicScores(payload) {
   return Average;
 }
 
-export default function Stats({ data, data2 }) {
+export default function Stats({ data }) {
   const [Total, setTotal] = useState(0);
   const [Average, setAverage] = useState(0);
   const [graphData, setGraphData] = useState([]);
@@ -148,7 +148,12 @@ export default function Stats({ data, data2 }) {
           </div>
         </div>
       ) : (
-        <></>
+        <div className="Error">
+          <h2>
+            You have not completed any quizzes yet. Please complete at least one
+            quiz to track your progress.
+          </h2>
+        </div>
       )}
       <style jsx>{`
         .data {
@@ -161,6 +166,11 @@ export default function Stats({ data, data2 }) {
           .topicgraph {
             max-width: 90%;
           }
+        }
+        .Error {
+          margin: auto;
+          padding: 50px;
+          text-align: center;
         }
       `}</style>
     </>
@@ -183,10 +193,7 @@ export const getServerSideProps = withPageAuthRequired({
     let data = await res.json();
     if (data.payload.length === 0) {
       return {
-        redirect: {
-          permanent: false,
-          destination: "/topics",
-        },
+        props: { data: false },
       };
     }
     return { props: { data } };

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 export default function InfoBox({ direct, title, description, link }) {
   return (
-    <Link href={direct}>
+    <Link href={direct} passHref>
       <Card
         hoverable
         title={title}
@@ -23,7 +23,7 @@ export default function InfoBox({ direct, title, description, link }) {
             height={370}
           />
         }
-        style={{ padding: "30px" }}
+        style={{ padding: "30px", marginBottom: "20px" }}
       >
         <p style={{ color: "#1E1E1E", fontSize: "1rem" }}>{description}</p>
       </Card>

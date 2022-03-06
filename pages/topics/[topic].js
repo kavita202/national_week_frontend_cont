@@ -6,6 +6,7 @@ import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
 import { useUser } from "@auth0/nextjs-auth0";
 import { API_URL } from "../../config/index.js";
 import repeat from "../../components/repeat.js";
+import { nanoid } from "nanoid";
 
 function shuffleArray(array) {
   let i = array.length;
@@ -31,9 +32,13 @@ function QuestionPage({ data, topic }) {
       if (value === data[key].correct_answer) {
         count++;
       }
-      setResult(count);
-      showModal();
     }
+    setResult(count);
+    if (user) {
+      console.log(user);
+      sendResult();
+    }
+    showModal();
   }
 
   useEffect(() => {
@@ -118,7 +123,7 @@ function QuestionPage({ data, topic }) {
               max-width: 600px;
               margin: 0 auto;
               justify-content: center;
-              padding: 0 3em;
+              padding: 2em 3em;
               background-color: white;
             }
           `}</style>
@@ -129,15 +134,17 @@ function QuestionPage({ data, topic }) {
             visible={isModalVisible}
             cancelText="Reattempt"
             okText="Show correct answers"
+            key={nanoid()}
           >
             <Result
+              key={nanoid()}
               icon={result > 4 ? <SmileOutlined /> : <FrownOutlined />}
               title={`You scored: ${result}`}
               subTitle={result > 5 ? "Well done!" : ""}
               extra={[
                 <Button
+                  key={nanoid()}
                   type="primary"
-                  key="log"
                   onClick={sendResult}
                   disabled={visiblebutton}
                   id="record"
@@ -145,6 +152,7 @@ function QuestionPage({ data, topic }) {
                   Record result
                 </Button>,
                 <Space
+                  key={nanoid()}
                   direction="horizontal"
                   style={{
                     width: "100%",
@@ -152,7 +160,7 @@ function QuestionPage({ data, topic }) {
                     paddingTop: "5px",
                   }}
                 >
-                  <Text>{addResult}</Text>
+                  <Text key={nanoid()}>{addResult}</Text>
                 </Space>,
               ]}
             />
