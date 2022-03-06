@@ -1,8 +1,11 @@
-import { Layout, Menu, Card } from "antd";
+import { Layout, Menu, Card, Button } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
 import { images } from "./images";
 import Graph from "./graph";
+import { useRouter } from "next/router";
+
 export default function TopicData({ graphData, getTopicForGraph, topic }) {
+  const router = useRouter();
   return (
     <Card>
       <Layout
@@ -46,9 +49,23 @@ export default function TopicData({ graphData, getTopicForGraph, topic }) {
             }}
           >
             {!Array.isArray(graphData) || !graphData.length ? (
-              <h3 style={{ textAlign: "center" }}>
-                No results found, please attempt quizzes for this topic
-              </h3>
+              <>
+                <h3 style={{ paddingBottom: "2rem" }}>
+                  {`No results found, would you like to attempt a quiz on ${topic} now?`}
+                </h3>
+                <Button
+                  size="large"
+                  onClick={() => {
+                    router.push({
+                      pathname: "/topics/[topic]",
+                      query: { topic: topic },
+                    });
+                  }}
+                  type="primary"
+                >
+                  Attempt Quiz
+                </Button>
+              </>
             ) : (
               <Graph graphData={graphData} topic={topic} />
             )}

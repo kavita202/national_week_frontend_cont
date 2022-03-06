@@ -118,7 +118,7 @@ function QuestionPage({ data, topic }) {
               max-width: 600px;
               margin: 0 auto;
               justify-content: center;
-              padding: 0 20px;
+              padding: 0 3em;
               background-color: white;
             }
           `}</style>

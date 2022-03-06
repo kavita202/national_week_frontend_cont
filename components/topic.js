@@ -2,29 +2,45 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 export default function Topic({ title, imgPath, dueDate }) {
+  // console.log(Date.parse(dueDate) - Date.parse(new Date()));
   const router = useRouter();
   return (
-    <div>
-      <div className="topicTitle">
-        <h3 className="week-names">{title}</h3>
-        {dueDate ? <h3 className="dueDate">{dueDate}</h3> : <></>}
-      </div>
-      <div
-        id={title}
-        onClick={() =>
-          router.push({
-            pathname: "/topics/[topic]",
-            query: { topic: title },
-          })
-        }
-        className="topic"
-      >
+    <div
+      onClick={() =>
+        router.push({
+          pathname: "/topics/[topic]",
+          query: { topic: title },
+        })
+      }
+    >
+      {dueDate ? (
+        <div className="topicTitle">
+          <h2 className="week-names">{title}</h2>
+          <p
+            style={
+              Date.parse(dueDate) - Date.parse(new Date()) < 0
+                ? { color: "red" }
+                : { color: "#1E1E1E" }
+            }
+            className="dueDate"
+          >
+            {new Date(dueDate).toString().slice(4, 15)}
+          </p>
+        </div>
+      ) : (
+        <div className="topicTitle">
+          <h2>{title}</h2>
+        </div>
+      )}
+
+      <div id={title} className="topic">
         <Image
           src={imgPath}
           alt={title}
           layout="responsive"
           width={230}
           height={230}
+          priority
         />
       </div>
       <style jsx>
@@ -41,16 +57,21 @@ export default function Topic({ title, imgPath, dueDate }) {
           }
           .topicTitle {
             display: flex;
-            justify-content: space-around;
-          }
-          .week-names {
-            padding-left: 12px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
           }
           .dueDate {
-            padding-right: 10px;
+            margin: 0;
+            font-weight: 600;
+          }
+          .week-names {
+            margin: 0;
           }
         `}
       </style>
     </div>
   );
 }
+
+// add conditional color if date is passed today

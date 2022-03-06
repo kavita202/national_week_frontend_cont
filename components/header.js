@@ -1,10 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0";
-import { Menu } from "antd";
+import { Menu, Button } from "antd";
 import "antd/dist/antd.css";
 import {
-  UserOutlined,
   SettingOutlined,
   LineChartOutlined,
   LogoutOutlined,
@@ -13,6 +12,22 @@ import {
 const { SubMenu } = Menu;
 export default function Header() {
   const { user } = useUser();
+
+  // function countDownDelay() {
+  //   setTimeout(function countDown() {
+  //     console.log(window.location.href);
+  //     let secondsToGo = 3;
+  //     const modal = Modal.success({
+  //       title: "Logout successful",
+  //     });
+  //     const timer = setInterval(() => {
+  //       secondsToGo -= 1;
+  //     }, 1000);
+  //     setTimeout(() => {
+  //       clearInterval(timer);
+  //     }, secondsToGo * 1000);
+  //   }, 2000);
+  // }
 
   return (
     <Menu mode="horizontal" theme="light">
@@ -25,9 +40,9 @@ export default function Header() {
       </Menu.Item>
       <Menu.Item key="Extra">
         <Link href="/topics" passHref>
-          {/* <h3> */}
-          <a>Topics</a>
-          {/* </h3> */}
+          <h3>
+            <a>Topics</a>
+          </h3>
         </Link>
       </Menu.Item>
 
@@ -56,7 +71,11 @@ export default function Header() {
             <Menu.Item key="settings" icon={<SettingOutlined />}>
               <a href="/">Settings</a>
             </Menu.Item>
-            <Menu.Item key="logout" icon={<LogoutOutlined />}>
+            <Menu.Item
+              key="logout"
+              icon={<LogoutOutlined />}
+              // onClick={countDownDelay}
+            >
               <a href="/api/auth/logout" key="logout">
                 Log out
               </a>
@@ -65,12 +84,16 @@ export default function Header() {
         </SubMenu>
       ) : (
         <>
-          <Menu.Item key="login" style={{ marginLeft: "auto" }}>
-            <h3>
+          <Menu.Item
+            className="noHover"
+            key="login"
+            style={{ marginLeft: "auto" }}
+          >
+            <Button type="primary">
               <a href="/api/auth/login" key="login">
                 Log in
               </a>
-            </h3>
+            </Button>
           </Menu.Item>
         </>
       )}

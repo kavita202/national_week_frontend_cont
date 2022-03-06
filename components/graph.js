@@ -2,12 +2,11 @@ import React, { useRef } from "react";
 import { ColumnChart } from "@opd/g2plot-react";
 
 export default function Graph({ graphData, topic }) {
-  console.log(graphData);
   const chartRef = useRef();
   const config = {
     xField: topic === "overview" ? "topic" : "time",
     yField: topic === "overview" ? "average" : "score",
-    color: topic === "overview" ? "#1890ff" : "#5400FF",
+    color: topic === "overview" ? "#1890ff" : "#1E1E1E",
     xAxis: {
       title: {
         text: topic === "overview" ? "Topic" : "Date",

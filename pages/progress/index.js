@@ -107,7 +107,7 @@ export default function Stats({ data, data2 }) {
                   value={Total}
                   valueStyle={{
                     fontSize: "2.5rem",
-                    color: "#5400FF",
+                    color: "#1890FF",
                   }}
                 />
               </Col>
@@ -120,7 +120,7 @@ export default function Stats({ data, data2 }) {
                       type="circle"
                       percent={Math.round((Average / 10) * 100)}
                       width={100}
-                      strokeColor={"#5400FF"}
+                      strokeColor={"#1890FF"}
                       style={{ paddingTop: "15px" }}
                     />
                   }
@@ -133,7 +133,7 @@ export default function Stats({ data, data2 }) {
                   precision={1}
                   valueStyle={{
                     fontSize: "2.5rem",
-                    color: "#5400FF",
+                    color: "#1890FF",
                   }}
                 />
               </Col>

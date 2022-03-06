@@ -9,3 +9,9 @@
   padding: 1em 0;
   font-size: 3em;
 }
+
+/* .ant-menu-horizontal,
+.ant-menu-item::after,
+.ant-menu-submenu::after {
+  border: none !important;
+} */
