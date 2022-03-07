@@ -8,7 +8,6 @@ context("Logged in user should be able to record result", () => {
       cy.get('[type="radio"]').check();
       cy.get("button[type=submit]").click();
       cy.contains("Show correct answers");
-      cy.get("button").contains("Record result").click();
       cy.contains("Result saved");
       cy.request("/api/auth/me").then(({ body: user }) => {
         expect(user.email).to.equal(Cypress.env("auth0Username"));

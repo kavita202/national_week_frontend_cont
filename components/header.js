@@ -8,6 +8,7 @@ import {
   LineChartOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
+import { GiElephant } from "react-icons/gi";
 
 const { SubMenu } = Menu;
 export default function Header() {
@@ -30,12 +31,13 @@ export default function Header() {
   // }
 
   return (
-    <Menu mode="horizontal" theme="light">
-      <Menu.Item key="Home">
+    <Menu mode="horizontal" theme="light" style={{ paddingTop: "12px" }}>
+      <Menu.Item key="Home" style={{ margin: "0 10px" }}>
         <Link href="/">
-          <h3>
-            <a>School of Quizzes</a>
-          </h3>
+          <a>
+            {" "}
+            <GiElephant size={"3.5em"} />
+          </a>
         </Link>
       </Menu.Item>
       <Menu.Item key="Extra">

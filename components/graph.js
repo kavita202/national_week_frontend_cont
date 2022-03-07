@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { ColumnChart } from "@opd/g2plot-react";
 
 export default function Graph({ graphData, topic }) {
+  console.log(graphData);
   const chartRef = useRef();
   const config = {
     xField: topic === "overview" ? "topic" : "time",

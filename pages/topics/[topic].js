@@ -33,12 +33,9 @@ function QuestionPage({ data, topic }) {
         count++;
       }
     }
+    console.log("open modal");
     setResult(count);
-    if (user) {
-      console.log(user);
-      sendResult();
-    }
-    showModal();
+    setIsModalVisible(true);
   }
 
   useEffect(() => {
@@ -53,9 +50,6 @@ function QuestionPage({ data, topic }) {
     }
   }, [data]);
 
-  function showModal() {
-    setIsModalVisible(true);
-  }
   const showCorrect = () => {
     setAnswer(true);
     setIsModalVisible(false);
@@ -71,7 +65,6 @@ function QuestionPage({ data, topic }) {
       setAddResult("Please sign in to track your progress");
     } else if (user) {
       const userId = user.sub;
-
       try {
         const response = await fetch(`${API_URL}/progress`, {
           method: "PUT",
@@ -134,7 +127,6 @@ function QuestionPage({ data, topic }) {
             visible={isModalVisible}
             cancelText="Reattempt"
             okText="Show correct answers"
-            key={nanoid()}
           >
             <Result
               key={nanoid()}
