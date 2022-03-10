@@ -11,6 +11,7 @@ export default function InfoBox({ direct, title, description, link }) {
           fontSize: "1.5rem",
           color: "#5400FF",
           paddingBottom: "10px",
+          borderBottom: "0",
         }}
         bordered={false}
         // change to next image tag!

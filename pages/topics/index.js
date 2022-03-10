@@ -60,11 +60,11 @@ export default function Home({ data }) {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            max-width: 1100px;
+            max-width: 1800px;
             margin: 0 auto;
             justify-content: center;
-            gap: 50px;
-            padding-top: 30px;
+            gap: 70px;
+            padding-top: 50px;
             align-items: flex-end;
           }
         `}</style>

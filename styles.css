@@ -10,8 +10,4 @@
   font-size: 3em;
 }
 
-/* .ant-menu-horizontal,
-.ant-menu-item::after,
-.ant-menu-submenu::after {
-  border: none !important;
-} */
+/* .ant-menu-overflow .ant-menu .ant-menu-root .ant-menu-horizontal .ant-menu-light */

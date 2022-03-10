@@ -2,17 +2,15 @@ import { Typography, Button } from "antd";
 const { Title, Text } = Typography;
 import Infobox from "./infobox.js";
 import { useRouter } from "next/router";
-import { GiElephant } from "react-icons/gi";
 function Info() {
   const router = useRouter();
   return (
     <>
       <div className="home">
-        <Title style={{ fontSize: "4em" }}>
-          Haathee
-          <br /> <GiElephant size={"6em"} />
+        <Title level={1} id="header">
+          haathee
         </Title>
-        <Title level={3} italic style={{ color: "#1890FF", paddingTop: "0px" }}>
+        <Title level={4} italic style={{ color: "#1890FF" }}>
           "The best way science knows to prevent forgetting is to practice
           regularly... Unless you revisit knowledge, or are forced to think
           about it, you will lose memories."
@@ -36,6 +34,12 @@ function Info() {
           link="/progress2.png"
           direct="/progress"
         />
+        <Infobox
+          title="The meaning of haathee"
+          description="The word haathee originates from the Hindi language and translates to Elephant. They been found to have incredible memories and are one of few species who can recognize their reflection in a mirror."
+          link="/elephant.svg"
+          direct="https://wonderopolis.org/wonder/do-elephants-ever-forget"
+        />
         <div className="buttonBox">
           <></>
           <Button
@@ -54,7 +58,7 @@ function Info() {
       </div>
       <style jsx>{`
         .home {
-          padding: 50px;
+          padding: 2em;
           margin: 0 auto;
           display: grid;
           justify-content: center;
@@ -66,6 +70,9 @@ function Info() {
           padding: 3em;
           color: red;
           max-width: 200px;
+        }
+        #header {
+          padding-bottom: 0px;
         }
       `}</style>
     </>
