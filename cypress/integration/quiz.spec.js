@@ -8,6 +8,7 @@ context("Logged in user should be able to record result", () => {
       cy.get('[type="radio"]').check();
       cy.get("button[type=submit]").click();
       cy.contains("Show correct answers");
+      cy.get("button").contains("Record result").click();
       cy.contains("Result saved");
       cy.request("/api/auth/me").then(({ body: user }) => {
         expect(user.email).to.equal(Cypress.env("auth0Username"));
@@ -40,7 +41,7 @@ context("User should be able to reattempt quiz", () => {
     cy.get('[type="radio"]').check();
     cy.get("button[type=submit]").click();
     cy.get("button").contains("Reattempt").click();
-    cy.contains('div[class*="ant-space-item"]');
+    cy.get("div[class*='QuestionBox']").should("have.length", 10);
     cy.contains("Databases");
     cy.get("button[type=submit]").click();
     cy.get("button").contains("Reattempt").click();
@@ -48,11 +49,8 @@ context("User should be able to reattempt quiz", () => {
 });
 
 describe("Submit quiz without inputting answers", () => {
-  it("should navigate to a question page from the homepage and try to submit without answering questions", () => {
-    cy.visit("/");
-    cy.get('a[href*="/topics"]').click();
-    cy.url().should("include", "/topics");
-    cy.get("h3").contains("CSS");
+  it("should try to submit without answering questions", () => {
+    cy.visit("/topics");
     cy.contains("Javascript");
     cy.get('div[id*="Javascript"]').click();
     cy.url().should("include", "/topics/Javascript");

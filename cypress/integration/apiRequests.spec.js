@@ -17,7 +17,7 @@ context(
     it("should login", () => {
       cy.login()
         .then(() => {
-          cy.request("PUT", `${Cypress.env("API_URL")}/progress`, {
+          cy.request("POST", `${Cypress.env("API_URL")}/progress/new`, {
             userId: Cypress.env("auth0UserId"),
             topic: "Javascript",
             score: 10,
