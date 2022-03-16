@@ -40,8 +40,8 @@ export default async function repeat(response, topic, result, userId) {
   if (!Array.isArray(payload) || !payload.length) {
     let efactorRound = Math.round(parseFloat(efactor * 1000) / 1000);
     try {
-      const response = await fetch(`${API_URL}/repeat`, {
-        method: "PUT",
+      const response = await fetch(`${API_URL}/repeat/new`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -64,7 +64,7 @@ export default async function repeat(response, topic, result, userId) {
     let efactorRound = Math.round(parseFloat(efactor * 1000) / 1000);
     try {
       const responsePatch = fetch(`${API_URL}/repeat`, {
-        method: "PATCH",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },

@@ -66,8 +66,8 @@ function QuestionPage({ data, topic }) {
     } else if (user) {
       const userId = user.sub;
       try {
-        const response = await fetch(`${API_URL}/progress`, {
-          method: "PUT",
+        const response = await fetch(`${API_URL}/progress/new`, {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
