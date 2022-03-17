@@ -4,6 +4,11 @@ import Image from "next/image";
 export default function Topic({ title, imgPath, dueDate }) {
   // console.log(Date.parse(dueDate) - Date.parse(new Date()));
   const router = useRouter();
+  useEffect(() => {
+    // Prefetch the dashboard page
+    router.prefetch("/topics/[topic]");
+  }, []);
+
   return (
     <div
       onClick={() =>

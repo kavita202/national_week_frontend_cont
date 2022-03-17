@@ -17,9 +17,6 @@ export default function Home({ data }) {
         let items = obj.row.split(",");
         let topicValue = items[0].slice(1);
         let dueDateValue = items[1].slice(1, 11);
-        // let dueDateValue = new Date(items[1].slice(1, 11))
-        //   .toString()
-        //   .slice(4, 10);
         formattedData = { ...formattedData, [topicValue]: dueDateValue };
       });
       setRepeatData(formattedData);

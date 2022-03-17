@@ -24,12 +24,14 @@
     "next": "latest",
     "next-auth": "^4.2.1",
     "next-images": "^1.8.4",
+    "nprogress": "^0.2.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
     "react-scripts": "^5.0.0",
     "sharp": "^0.30.2",
-    "supermemo": "^2.0.17"
+    "supermemo": "^2.0.17",
+    "swr": "^1.2.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.2",
