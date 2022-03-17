@@ -1,11 +1,10 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-
+import { useEffect } from "react";
 export default function Topic({ title, imgPath, dueDate }) {
   // console.log(Date.parse(dueDate) - Date.parse(new Date()));
   const router = useRouter();
   useEffect(() => {
-    // Prefetch the dashboard page
     router.prefetch("/topics/[topic]");
   }, []);
 
