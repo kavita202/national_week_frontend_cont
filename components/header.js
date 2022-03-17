@@ -16,7 +16,7 @@ export default function Header() {
   const { user } = useUser();
   const router = useRouter();
   useEffect(() => {
-    router.prefetch("/contact");
+    router.prefetch("/topics");
   }, []);
 
   return (
