@@ -99,8 +99,8 @@ export default function Stats({ data }) {
       {data && graphData ? (
         <div className="center">
           <h1 className="greeting">{`${username}'s progress page`}</h1>
-          <div>
-            <Row type="flex" align="middle" justify="end">
+          <div style={{ padding: "0 1rem" }}>
+            <Row type="flex" align="middle" justify="space-evenly">
               <Col span={8} align="middle">
                 <Statistic
                   title="Quizzes attempted"
@@ -159,12 +159,12 @@ export default function Stats({ data }) {
         .data {
           max-width: 100%;
           margin: auto;
-          padding-top: 50px;
+          padding: 3rem 1rem;
         }
 
         @media only screen and (max-width: 700px) {
           .topicgraph {
-            max-width: 90%;
+            max-width: 100%;
           }
         }
         .Error {

@@ -8,25 +8,26 @@ export default function InfoBox({ direct, title, description, link }) {
         hoverable
         title={title}
         headStyle={{
-          fontSize: "1.5rem",
+          fontSize: "2.2em",
           color: "#5400FF",
-          paddingBottom: "10px",
+          padding: "0 0 1.5em 0",
           borderBottom: "0",
         }}
         bordered={false}
-        // change to next image tag!
         cover={
           <Image
             src={link}
             alt={title}
-            layout="intrinsic"
-            width={500}
-            height={370}
+            layout="responsive"
+            width={380}
+            height={280}
           />
         }
-        style={{ padding: "30px", marginBottom: "20px" }}
+        style={{ padding: "30px" }}
       >
-        <p style={{ color: "#1E1E1E", fontSize: "1rem" }}>{description}</p>
+        <p style={{ color: "#1E1E1E", fontSize: "1.2em", paddingTop: "1rem" }}>
+          {description}
+        </p>
       </Card>
     </Link>
   );

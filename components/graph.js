@@ -65,7 +65,7 @@ export default function Graph({ graphData, topic }) {
       <style jsx>{`
         .graph {
           // box-shadow: 0 4px 8px 0 grey;
-          padding: 20px;
+          padding: 1em;
           margin-top: 50px;
           max-width: 90%;
           margin: auto;

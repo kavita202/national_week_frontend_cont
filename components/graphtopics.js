@@ -11,6 +11,8 @@ export default function TopicData({ graphData, getTopicForGraph, topic }) {
       <Layout
         style={{
           minHeight: "400px",
+          border: "20px",
+          padding: "0px",
         }}
       >
         <Sider width={200} breakpoint="lg" collapsedWidth="50">

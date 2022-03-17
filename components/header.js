@@ -14,29 +14,12 @@ const { SubMenu } = Menu;
 export default function Header() {
   const { user } = useUser();
 
-  // function countDownDelay() {
-  //   setTimeout(function countDown() {
-  //     console.log(window.location.href);
-  //     let secondsToGo = 3;
-  //     const modal = Modal.success({
-  //       title: "Logout successful",
-  //     });
-  //     const timer = setInterval(() => {
-  //       secondsToGo -= 1;
-  //     }, 1000);
-  //     setTimeout(() => {
-  //       clearInterval(timer);
-  //     }, secondsToGo * 1000);
-  //   }, 2000);
-  // }
-
   return (
-    <Menu mode="horizontal" theme="light" style={{ paddingTop: "12px" }}>
-      <Menu.Item key="Home" style={{ margin: "0 10px" }}>
+    <Menu mode="horizontal" theme="light" style={{ alignItems: "center" }}>
+      <Menu.Item key="Home" style={{ paddingTop: ".8em" }}>
         <Link href="/">
           <a>
-            {" "}
-            <GiElephant size={"3.5em"} />
+            <GiElephant size={"2em"} />
           </a>
         </Link>
       </Menu.Item>
@@ -57,8 +40,7 @@ export default function Header() {
               style={{
                 height: "35px",
                 width: "35px",
-                alignItems: "center",
-                margin: "2px 0 0 10px",
+                margin: "10px 0 10px 10px",
               }}
             />
           }
@@ -73,11 +55,7 @@ export default function Header() {
             <Menu.Item key="settings" icon={<SettingOutlined />}>
               <a href="/">Settings</a>
             </Menu.Item>
-            <Menu.Item
-              key="logout"
-              icon={<LogoutOutlined />}
-              // onClick={countDownDelay}
-            >
+            <Menu.Item key="logout" icon={<LogoutOutlined />}>
               <a href="/api/auth/logout" key="logout">
                 Log out
               </a>

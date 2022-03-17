@@ -7,7 +7,7 @@ function Info() {
   return (
     <>
       <div className="home">
-        <Title level={1} id="header">
+        <Title level={1} style={{ marginBottom: "0" }}>
           haathee
         </Title>
         <Title level={4} italic style={{ color: "#1890FF" }}>
@@ -17,7 +17,7 @@ function Info() {
         </Title>
         <Text type="secondary">-The Programmer's Brain, Felienne Hermans</Text>
         <Infobox
-          title="Overcome the forgetting curve"
+          title="Spaced Repetition"
           description="Spaced repetition forces learning to be effortful, thus strengthening the connection between nerve cells in the brain. This helps you to retain information for longer and reduces cognitive overload"
           link="/curve2.png"
           direct="https://www.studentdoctor.net/2018/07/31/spaced-repetition/"
@@ -29,13 +29,13 @@ function Info() {
           direct="/topics"
         />
         <Infobox
-          title="Track your progress"
+          title="Progress Tracker"
           description="Monitor your results using the individualized progress tracker"
           link="/progress2.png"
           direct="/progress"
         />
         <Infobox
-          title="The meaning of haathee"
+          title="Why haathee?"
           description="The word haathee originates from the Hindi language and translates to Elephant. They been found to have incredible memories and are one of few species who can recognize their reflection in a mirror."
           link="/elephant.svg"
           direct="https://wonderopolis.org/wonder/do-elephants-ever-forget"
@@ -60,11 +60,12 @@ function Info() {
         .home {
           padding: 2em;
           margin: 0 auto;
-          display: grid;
           justify-content: center;
           text-align: center;
-          gap: 10px;
+          gap: 1em;
           max-width: 800px;
+          display: flex;
+          flex-direction: column;
         }
         .home > .ant-btn {
           padding: 3em;
