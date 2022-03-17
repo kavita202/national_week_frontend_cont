@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { useUser } from "@auth0/nextjs-auth0";
 import { Menu, Button } from "antd";
@@ -13,6 +14,10 @@ import { GiElephant } from "react-icons/gi";
 const { SubMenu } = Menu;
 export default function Header() {
   const { user } = useUser();
+  const router = useRouter();
+  useEffect(() => {
+    router.prefetch("/contact");
+  }, []);
 
   return (
     <Menu mode="horizontal" theme="light" style={{ alignItems: "center" }}>
