@@ -52,7 +52,7 @@ function Info() {
               });
             }}
           >
-            Get started
+            Get started!
           </Button>
         </div>
       </div>
@@ -74,6 +74,9 @@ function Info() {
         }
         #header {
           padding-bottom: 0px;
+        }
+        .buttonBox {
+          padding-top: 3rem;
         }
       `}</style>
     </>

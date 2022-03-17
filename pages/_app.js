@@ -6,7 +6,11 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import Router from "next/router";
 import "../styles.css";
+
 export default function App({ Component, pageProps }) {
+  NProgress.configure({
+    showSpinner: false,
+  });
   useEffect(() => {
     Router.events.on("routeChangeStart", NProgress.start);
     Router.events.on("routeChangeComplete", NProgress.done);

@@ -20,7 +20,7 @@ export default function Header() {
   }, []);
 
   return (
-    <Menu mode="horizontal" theme="light" style={{ alignItems: "center" }}>
+    <Menu mode="horizontal" theme="light">
       <Menu.Item key="Home" style={{ paddingTop: ".8em" }}>
         <Link href="/">
           <a>
@@ -72,7 +72,7 @@ export default function Header() {
           <Menu.Item
             className="noHover"
             key="login"
-            style={{ marginLeft: "auto" }}
+            style={{ marginLeft: "auto", paddingTop: ".3em" }}
           >
             <Button type="primary">
               <a href="/api/auth/login" key="login">
