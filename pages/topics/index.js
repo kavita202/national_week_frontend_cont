@@ -6,7 +6,6 @@ import { API_URL } from "../../config/index.js";
 import { topics } from "../../components/images.js";
 import { useEffect, useState } from "react";
 
-// topic requires query,
 export default function Home({ data }) {
   const [repeatData, setRepeatData] = useState([]);
   let formattedData = {};

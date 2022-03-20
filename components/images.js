@@ -5,9 +5,9 @@ const images = {
   Databases: "/DB.png",
   Testing: "/Jest.png",
   React: "/React.png",
-  Agile: "/Agile.png",
-  Architecture: "/Architecture.png",
   TypeScript: "/TS.png",
+  Agile: "/Agile.png",
+  DevOps: "/DevOps.png",
   Security: "/Security.jpg",
 };
 
@@ -18,9 +18,9 @@ const topics = [
   ["Databases", "/DB.png"],
   ["Testing", "/Jest.png"],
   ["React", "/React.png"],
-  ["Agile", "/Agile.png"],
-  ["Architecture", "/Architecture.png"],
   ["TypeScript", "/TS.png"],
+  ["Agile", "/Agile.png"],
+  ["DevOps", "/DevOps.png"],
   ["Security", "/Security.jpg"],
 ];
 export { images, topics };
