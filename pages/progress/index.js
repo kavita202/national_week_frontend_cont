@@ -38,6 +38,7 @@ function collateTopicScores(payload) {
     ...item,
     average: round(item.total.reduce((b, a) => a + b) / item.total.length, 1),
   }));
+  console.log(Average);
   return Average;
 }
 
@@ -76,7 +77,6 @@ export default function Stats({ data }) {
         return item.topic.toLowerCase() === topic.toLowerCase();
       });
       const topicDataParsed = topicData.map((item) => {
-        // let newtime = new Date(item.time).toString().slice(5, 3);
         let newtime = `${new Date(item.time).getDate()}/${
           new Date(item.time).getMonth() + 1
         }`;

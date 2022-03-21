@@ -7,19 +7,12 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { API_URL } from "../../config/index.js";
 import repeat from "../../components/repeat.js";
 import { nanoid } from "nanoid";
+import TextAns from "../../components/text.js";
+import stringSimilarity from "string-similarity";
 
-function shuffleArray(array) {
-  let i = array.length;
-  while (i--) {
-    const ri = Math.floor(Math.random() * i);
-    [array[i], array[ri]] = [array[ri], array[i]];
-  }
-  return array;
-}
 const { Text } = Typography;
 function QuestionPage({ data, topic }) {
   const [result, setResult] = useState(-1);
-  const [shuffledAns, setShuffledAns] = useState([]);
   const [answer, setAnswer] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [addResult, setAddResult] = useState("");
@@ -29,26 +22,18 @@ function QuestionPage({ data, topic }) {
   function compare(values) {
     let count = 0;
     for (const [key, value] of Object.entries(values)) {
-      if (value === data[key].correct_answer) {
-        count++;
+      if (!isNaN(key)) {
+        value === data[key].correct_answer ? count++ : "";
+      } else if (key[0] === "!") {
+        stringSimilarity.compareTwoStrings(value, data[key[1]].correct_answer) >
+        0.7
+          ? count++
+          : "";
       }
     }
-    console.log("open modal");
     setResult(count);
     setIsModalVisible(true);
   }
-
-  useEffect(() => {
-    if (data) {
-      let answerArray = data.map(({ correct_answer, incorrect_answers }) => [
-        { answer: correct_answer, correct: true },
-        ...incorrect_answers.map(function (ans) {
-          return { answer: ans, correct: false };
-        }),
-      ]);
-      setShuffledAns(answerArray.map((set) => shuffleArray(set)));
-    }
-  }, [data]);
 
   const showCorrect = () => {
     setAnswer(true);
@@ -86,19 +71,19 @@ function QuestionPage({ data, topic }) {
     }
   }, [user, result]);
 
-  if (shuffledAns.length > 1 && data) {
+  if (data) {
     return (
       <>
         <TopicHeader topic={topic[0].toUpperCase() + topic.slice(1)} />
         <div className="question_Section">
           <Form onFinish={compare}>
-            {data.map(({ question, id, type }, i) => (
-              <div className="QuestionBox" key={id}>
-                <h4>{question}</h4>
-                {type === "MCQ" ? (
-                  <MCQ i={i} shuffledAns={shuffledAns[i]} answer={answer} />
+            {data.map((set, i) => (
+              <div className="QuestionBox" key={set.id}>
+                <h4>{set.question}</h4>
+                {set.type === "MCQ" ? (
+                  <MCQ i={i} set={{ ...set }} answer={answer} />
                 ) : (
-                  <></>
+                  <TextAns set={{ ...set }} i={i} answer={answer} />
                 )}
               </div>
             ))}

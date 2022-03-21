@@ -1,15 +1,27 @@
 import { Form, Input } from "antd";
 
-function Written() {
+function TextAns({ i, answer, set }) {
   return (
     <Form.Item
-      name={i}
+      name={`!${i}`}
       value={i}
       rules={[{ required: true, message: "Please input an answer" }]}
     >
       <Input placeholder="Enter answer here" />
+      {answer ? (
+        <p
+          style={{
+            fontWeight: "600",
+            color: "green",
+          }}
+        >
+          {set.correct_answer}
+        </p>
+      ) : (
+        <></>
+      )}
     </Form.Item>
   );
 }
 
-export default Written;
+export default TextAns;
